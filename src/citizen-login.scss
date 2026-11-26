@@ -1,5 +1,5 @@
 /* ===== Citizen Login page (below the page banner) ===== */
-:root .cl { position: relative; overflow: hidden; isolation: isolate; background: var(--p-bg-2); }
+:root .cl { position: relative; overflow: hidden; isolation: isolate; background: transparent; /* same page background as About Us */ }
 :root .cl-blob { position: absolute; z-index: -1; border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; filter: blur(2px); opacity: 0.5; animation: cl-morph 16s ease-in-out infinite, cl-drift 22s ease-in-out infinite; pointer-events: none; }
 :root .cl-blob-a { width: 460px; height: 460px; left: -140px; top: -120px; background: color-mix(in srgb, var(--p-gold-2) 22%, transparent); }
 :root .cl-blob-b { width: 520px; height: 520px; right: -160px; bottom: -180px; background: color-mix(in srgb, var(--brand) 16%, transparent); animation-delay: -6s; }
@@ -90,3 +90,6 @@
 @media (max-width: 820px) { :root .cl-grid { grid-template-columns: minmax(0, 1fr); } :root .cl-main { order: -1; } }
 @media (max-width: 480px) { :root .cl-captcha { grid-template-columns: minmax(0, 1fr) auto; } :root .cl-captcha .cl-field { grid-column: 1 / -1; } :root .cl-cap-img { min-width: 0; } :root .cl-head { flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { :root .cl-blob, :root .cl-ico, :root .cl-track, :root .cl-form.shake { animation: none; } :root .cl-ticker { overflow-y: auto; } :root .cl-btn::after { display: none; } }
+
+/* decorative background blobs hidden so this page matches About Us and the other inner pages */
+:root .cl-blob { display: none; }

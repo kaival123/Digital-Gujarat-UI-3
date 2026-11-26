@@ -79,7 +79,10 @@ export class App {
       const li = this.hoverOpened;
       if (li && (e.target as Element).closest?.('.p-menubar-item-content') && li.contains(e.target as Node) && li.getAttribute('aria-expanded') === 'true') { e.stopPropagation(); this.hoverOpened = null; }
     }, true);
-    try { const k = localStorage.getItem('dg-theme'); const t = this.themes.find((x) => x.key === k); if (t && t.key !== 'navy') this.setTheme(t); } catch { /* storage unavailable */ }
+    // Blue Saffron is the default; a visitor's own pick (stored under THEME_KEY) wins.
+    let saved: (typeof this.themes)[number] | undefined;
+    try { const k = localStorage.getItem(App.THEME_KEY); saved = this.themes.find((x) => x.key === k); } catch { /* storage unavailable */ }
+    this.setTheme(saved ?? this.defaultTheme);
     // Passive + rAF-throttled: scrolling never blocks, and signals only change when the value does.
     window.addEventListener('scroll', () => {
       if (this.ticking) return;
@@ -201,11 +204,18 @@ export class App {
     { key: 'rose', name: 'Rose', main: '#e11d48', a2: '#fb7185', a3: '#fecdd3' },
     { key: 'amber', name: 'Amber', main: '#d97706', a2: '#fbbf24', a3: '#fde68a' },
     { key: 'tricolour', name: 'Tricolour', main: '#06038d', a2: '#ff9933', a3: '#ffdcb8', dot: 'linear-gradient(135deg,#ff9933 0 34%,#fff 34% 66%,#138808 66%)' },
-    { key: 'saffron', name: 'Saffron', main: '#c2410c', a2: '#ff9933', a3: '#ffe0c2' },
+    { key: 'saffron', name: 'Blue Saffron', main: '#c2410c', a2: '#ff9933', a3: '#ffe0c2', dot: 'linear-gradient(135deg, #0b3d91, #ff9933)' }, // menu label + swatch only; page colours unchanged
+    // ink/ink2: this theme's own dark surfaces (top bar, banners, stats) — deep saffron-brown instead of the default navy
+    { key: 'saffron-plain', name: 'Saffron', main: '#d4570b', a2: '#ff9933', a3: '#ffe3c4', ink: '#3b1a06', ink2: '#7a3510' },
     { key: 'indiagreen', name: 'India Green', main: '#138808', a2: '#22a516', a3: '#c8f7bf' },
     { key: 'chakra', name: 'Chakra Blue', main: '#06038d', a2: '#3f3fd1', a3: '#c9c9ff' },
   ];
-  theme = signal(this.themes[0]);
+  /** Default theme for visitors who haven't picked one: Blue Saffron. */
+  readonly defaultTheme = this.themes.find((x) => x.key === 'saffron') ?? this.themes[0];
+  /* new storage key: the old 'dg-theme' got 'navy' written for every visitor during earlier theme work,
+     which would have hidden the new default; starting a fresh key gives everyone Blue Saffron once. */
+  private static readonly THEME_KEY = 'dg-theme-v2';
+  theme = signal(this.defaultTheme);
   themeOpen = signal(false);
 
   setTheme(t: (typeof this.themes)[number]) {
@@ -216,7 +226,19 @@ export class App {
     s.setProperty('--brand-rgb', `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`);
     s.setProperty('--brand-2', t.a2);
     s.setProperty('--brand-3', t.a3);
-    try { localStorage.setItem('dg-theme', t.key); } catch { /* storage unavailable */ }
+    // lets CSS give a theme extra touches that must respect dark mode (e.g. Saffron's brown text, see official.scss)
+    document.documentElement.setAttribute('data-dg-theme', t.key);
+    // dark surfaces: a theme may bring its own (e.g. Saffron = saffron-brown); otherwise fall back to the default navy
+    if (t.ink) {
+      const k = parseInt(t.ink.slice(1), 16);
+      s.setProperty('--ink', t.ink);
+      s.setProperty('--ink-2', t.ink2 ?? t.ink);
+      s.setProperty('--ink-rgb', `${(k >> 16) & 255}, ${(k >> 8) & 255}, ${k & 255}`);
+      s.setProperty('--dg-hero-bg', t.ink);
+    } else {
+      for (const p of ['--ink', '--ink-2', '--ink-rgb', '--dg-hero-bg']) s.removeProperty(p);
+    }
+    try { localStorage.setItem(App.THEME_KEY, t.key); } catch { /* storage unavailable */ }
   }
 
   @HostListener('document:click')

@@ -152,13 +152,40 @@ export class HomePage {
   heroReady = signal(false);
   private heroReadyInit = afterNextRender(() => {
     const el = document.documentElement;
-    const go = () => { if (!el.classList.contains('al-loading')) { obs.disconnect(); requestAnimationFrame(() => requestAnimationFrame(() => this.heroReady.set(true))); } };
+    // Two frames normally; the timer covers tabs that aren't painting (background/hidden), where rAF never fires
+    // and autoplay used to stay off for good.
+    const ready = () => this.heroReady.set(true);
+    const go = () => {
+      if (el.classList.contains('al-loading')) return;
+      obs.disconnect();
+      requestAnimationFrame(() => requestAnimationFrame(ready));
+      setTimeout(ready, 120);
+    };
     const obs = new MutationObserver(go);
     obs.observe(el, { attributes: true, attributeFilter: ['class'] });
     go();
   });
-  heroDown(e: PointerEvent) { this.heroX = e.clientX; }
-  heroUp(e: PointerEvent) { const dx = e.clientX - this.heroX; if (Math.abs(dx) > 50) this.heroGo(dx < 0 ? 1 : -1); }
+  /* Pause while a mouse hovers or a KEYBOARD user is inside. A mouse click on an arrow/dot also moves focus inside the
+     stage; pausing on that kept autoplay stopped until the user clicked elsewhere. Touch never pauses (a tap fires
+     enter with no matching leave). */
+  private heroHover = false;
+  private heroKbFocus = false;
+  private heroSyncPause() { this.heroPaused.set(this.heroHover || this.heroKbFocus); }
+  heroEnter(e: PointerEvent) { if (e.pointerType === 'mouse') { this.heroHover = true; this.heroSyncPause(); } }
+  heroLeave() { this.heroHover = false; this.heroSwipe = false; this.heroSyncPause(); }
+  heroFocusIn(e: FocusEvent) { this.heroKbFocus = (e.target as Element | null)?.matches?.(':focus-visible') ?? false; this.heroSyncPause(); }
+  heroFocusOut(e: FocusEvent) {
+    const next = e.relatedTarget as Node | null;
+    if (!next || !(e.currentTarget as Element).contains(next)) { this.heroKbFocus = false; this.heroSyncPause(); }
+  }
+  heroDown(e: PointerEvent) { this.heroX = e.clientX; this.heroSwipe = true; }
+  heroUp(e: PointerEvent) {
+    if (!this.heroSwipe) return; // pointer went down outside the stage
+    this.heroSwipe = false;
+    const dx = e.clientX - this.heroX;
+    if (Math.abs(dx) > 50) this.heroGo(dx < 0 ? 1 : -1);
+  }
+  private heroSwipe = false;
   heroKey(e: KeyboardEvent) {
     if (e.key === 'ArrowRight') { this.heroGo(1); e.preventDefault(); }
     else if (e.key === 'ArrowLeft') { this.heroGo(-1); e.preventDefault(); }

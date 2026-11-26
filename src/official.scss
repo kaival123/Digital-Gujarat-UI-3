@@ -338,3 +338,34 @@
 /* ticker "Latest" badge: icon and text centred on one line */
 :root .ticker-label { display: inline-flex; align-items: center; justify-content: center; gap: 8px; line-height: 1; min-height: 34px; padding-block: 0; white-space: nowrap; text-decoration: none; }
 :root .ticker-label i { margin: 0; display: block; font-size: 0.95rem; line-height: 1; }
+
+/* sticky top: the utility bar now stays pinned together with the navigation. The wrapper is the sticky element; the
+   header inside it keeps height 0, so the nav pill still floats over the hero at rest and becomes the full-width bar
+   directly under the utility bar once the page scrolls. */
+:root .site-top { position: sticky; top: 0; z-index: var(--z-header); }
+:root .site-top .site-header { position: relative; top: 0; }
+/* in-page jumps (skip link, #anchors) land below the pinned bars instead of underneath them */
+html { scroll-padding-top: 140px; }
+
+/* nav labels never wrap ("About Us", "Latest Update"); on narrow desktops the items tighten so the extra Schemes menu still fits on one row */
+:root .main-nav .p-menubar-root-list > li > .p-menubar-item-content .p-menubar-item-label { white-space: nowrap; }
+@media (min-width: 1181px) and (max-width: 1320px) {
+  :root .main-nav .p-menubar-root-list > li > .p-menubar-item-content .p-menubar-item-link { padding-inline: 0.42rem; gap: 0.3rem; font-size: 0.86rem; }
+  :root .site-header .header-inner { gap: 8px; }
+}
+
+/* page-hero breadcrumb on phones: one line; long last crumbs (scheme / certificate names) end in an ellipsis instead of stacking */
+@media (max-width: 640px) {
+  :root .page-hero .p-breadcrumb { max-width: 100%; }
+  :root .page-hero .p-breadcrumb-list { flex-wrap: nowrap; min-width: 0; }
+  :root .page-hero .p-breadcrumb-list > li { flex: none; min-width: 0; }
+  :root .page-hero .p-breadcrumb-list > li:last-child { flex: 1 1 auto; overflow: hidden; }
+  :root .page-hero .p-breadcrumb-item-label { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* Saffron theme (light mode): brown text instead of the default navy text, so no blue remains anywhere.
+   Dark mode keeps its own light text. The attribute is set by the theme picker (app.ts setTheme). */
+:root[data-dg-theme="saffron-plain"]:not(.app-dark) {
+  --p-ink: #2b1606;  --dg-text: #2b1606;   /* headings & body text: very dark brown */
+  --p-muted: #6b4f3a; --dg-muted: #6b4f3a; /* secondary text: brown-grey (~7:1 on white) */
+}

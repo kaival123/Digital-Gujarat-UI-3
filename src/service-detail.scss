@@ -1,5 +1,5 @@
 /* ===== Service detail page (below the page banner) ===== */
-:root .sd { position: relative; overflow: hidden; isolation: isolate; background: var(--p-bg-2); }
+:root .sd { position: relative; overflow: hidden; isolation: isolate; background: transparent; /* same page background as About Us */ }
 :root .sd-blob { position: absolute; z-index: -1; right: -140px; top: -120px; width: 440px; height: 440px; border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; background: color-mix(in srgb, var(--p-gold-2) 20%, transparent); opacity: 0.5; animation: sd-morph 16s ease-in-out infinite; pointer-events: none; }
 @keyframes sd-morph { 50% { border-radius: 58% 42% 37% 63% / 56% 59% 41% 44%; translate: -30px 30px; } }
 
@@ -65,3 +65,6 @@
 @media (max-width: 520px) { :root .sd-pn { grid-template-columns: minmax(0, 1fr); } :root .sd-acc-btn { font-size: 1.1rem; padding: 16px; } :root .sd-read span { display: none; } }
 @media (prefers-reduced-motion: reduce) { :root .sd-blob, :root .sd-img, :root .sd-read.on i { animation: none; } :root .sd-list li, :root .sd-steps li { animation: none; opacity: 1; translate: none; } :root .sd-acc { transition: none; } }
 :root .sd-intro { margin: 0 0 16px; color: var(--p-ink); line-height: 1.7; font-weight: 500; padding: 12px 14px; border-radius: var(--p-r); background: var(--p-bg-2); border-left: 3px solid #ff9933; }
+
+/* decorative background blobs hidden so this page matches About Us and the other inner pages */
+:root .sd-blob { display: none; }

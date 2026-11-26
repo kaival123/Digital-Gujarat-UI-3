@@ -1,4 +1,8 @@
+import { signal } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+
+/** Tab shown on the Latest Update page; the header dropdown sets it directly (works even when already on that page). */
+export const LATEST_TAB = signal<'news' | 'circular'>('news');
 
 export const SITE = 'https://www.digitalgujarat.gov.in/';
 export const A = 'assets/';
@@ -10,20 +14,39 @@ export interface SiteLink { label: string; route?: string; url?: string; }
 export const NAV: MenuItem[] = [
   { label: 'Home', icon: 'pi pi-home', routerLink: '/', routerLinkActiveOptions: { exact: true } },
   { label: 'About Us', routerLink: '/about-us' },
-  { label: 'Sugam Digital Gujarat', routerLink: '/sugam-digital-gujarat' },
+  {
+    label: 'Schemes',
+    items: [
+      { label: 'Government Schemes (Mari Yojana)', icon: 'pi pi-star', url: 'https://mariyojana.gujarat.gov.in/', target: '_blank' },
+      { label: 'Department Schemes & Subsidies', icon: 'pi pi-briefcase', routerLink: '/services/digital-sevasetu' },
+      { label: 'Scholarship Schemes', icon: 'pi pi-graduation-cap', routerLink: '/scholarships' },
+      { label: 'Agriculture Schemes (iKhedut)', icon: 'pi pi-sun', url: 'https://ikhedut.gujarat.gov.in/', target: '_blank' },
+      { label: 'Find Central Schemes (myScheme)', icon: 'pi pi-search', url: 'https://www.myscheme.gov.in/', target: '_blank' },
+    ],
+  },
   {
     label: 'Services',
     items: [
       { label: 'Citizen Services', icon: 'pi pi-users', routerLink: '/services/citizen' },
-      { label: 'Digital SevaSetu Services', icon: 'pi pi-bolt', routerLink: '/services/digital-sevasetu' },
+      { label: 'Sugam Digital Gujarat', icon: 'pi pi-bolt', routerLink: '/sugam-digital-gujarat' },
+      { label: 'Certificates', icon: 'pi pi-verified', routerLink: '/services/certificates' },
+      { label: 'Digital SevaSetu Services', icon: 'pi pi-briefcase', routerLink: '/services/digital-sevasetu' },
       { label: 'Janseva Services', icon: 'pi pi-building', routerLink: '/services/janseva' },
       { label: 'Scholarship Services', icon: 'pi pi-graduation-cap', url: 'https://gssp.gujarat.gov.in/' },
       { label: 'Linked Services', icon: 'pi pi-link', routerLink: '/services/linked' },
     ],
   },
   { label: 'Policy', url: 'https://gujaratindia.gov.in/PolicyDetails' },
-  { label: 'Business', url: 'https://gujaratindia.gov.in/Home/GujaratTheInvestmentDestination' },
-  { label: 'Latest Update', routerLink: '/latest-update' },
+  {
+    label: 'Latest Update',
+    items: [
+      { label: 'News & Updates', icon: 'pi pi-megaphone', routerLink: '/latest-update', queryParams: { tab: 'news' }, command: () => LATEST_TAB.set('news') },
+      { label: 'Circular / Notification', icon: 'pi pi-file', routerLink: '/latest-update', queryParams: { tab: 'circular' }, command: () => LATEST_TAB.set('circular') },
+      // external portals (same links as the page's "Related portals" rail); they open in a new tab like there
+      { label: 'Government Scheme / Service', icon: 'pi pi-briefcase', url: 'https://mariyojana.gujarat.gov.in/', target: '_blank' },
+      { label: 'Government Tenders', icon: 'pi pi-file-edit', url: 'https://gil.gujarat.gov.in/Tenders', target: '_blank' },
+    ],
+  },
 ];
 
 export const LOGIN_MENU: MenuItem[] = [

@@ -1,6 +1,8 @@
 @if (navigating()) { <div class="route-loading" role="progressbar" aria-label="Loading page" aria-busy="true"><i></i></div> }
 <div class="scroll-progress" aria-hidden="true" [style.transform]="'scaleX(' + progress() + ')'"></div>
 
+<!-- Sticky top: utility bar + navigation stay together at the top while scrolling -->
+<div class="site-top">
 <!-- Utility bar -->
 <div class="topbar">
   <div class="container topbar-inner">
@@ -50,6 +52,7 @@
   <div class="container header-inner">
     <a class="brand" routerLink="/" aria-label="Digital Gujarat home">
       <img src="assets/img/logo/emblem-of-india.png" alt="Emblem of India" class="emblem">
+      <img src="assets/img/logo/dstlogo.png" alt="Department of Science and Technology, Gujarat" class="dst" width="655" height="380">
       <img src="assets/img/logo/logodig.png" alt="Digital Gujarat" class="logo">
     </a>
     <p-menubar [model]="nav" breakpoint="1180px" class="main-nav" />
@@ -59,6 +62,7 @@
     <button pButton type="button" class="login-btn" [rounded]="true" aria-label="Login / Register" (click)="loginClick(loginPanel, $event)" (pointerenter)="loginEnter(loginPanel, $event)" (pointerleave)="loginLeave(loginPanel, $event)"><i class="pi pi-sign-in"></i><span class="login-label"> Login / Register</span></button>
   </div>
 </header>
+</div>
 
 <main id="main">
   <router-outlet />

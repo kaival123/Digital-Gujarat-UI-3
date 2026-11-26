@@ -1,5 +1,5 @@
 /* ===== Helpdesk page (below the page banner) ===== */
-:root .hd { position: relative; overflow: hidden; isolation: isolate; background: var(--p-bg-2); }
+:root .hd { position: relative; overflow: hidden; isolation: isolate; background: transparent; /* same page background as About Us */ }
 :root .hd-blob { position: absolute; z-index: -1; border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; opacity: 0.5; animation: hd-morph 16s ease-in-out infinite, hd-drift 22s ease-in-out infinite; pointer-events: none; }
 :root .hd-blob-a { width: 440px; height: 440px; right: -120px; top: -100px; background: color-mix(in srgb, var(--p-gold-2) 22%, transparent); }
 :root .hd-blob-b { width: 480px; height: 480px; left: -160px; bottom: -160px; background: color-mix(in srgb, var(--brand) 15%, transparent); animation-delay: -7s; }
@@ -47,3 +47,6 @@
 
 @media (max-width: 900px) { :root .hd-top { grid-template-columns: minmax(0, 1fr); } :root .hd-chip-1 { left: 6px; } :root .hd-chip-2 { right: 6px; } }
 @media (prefers-reduced-motion: reduce) { :root .hd-blob, :root .hd-art img, :root .hd-chip, :root .hd-ring::before, :root .hd-hours .hd-dot { animation: none; } }
+
+/* decorative background blobs hidden so this page matches About Us and the other inner pages */
+:root .hd-blob { display: none; }

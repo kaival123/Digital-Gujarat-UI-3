@@ -1,5 +1,5 @@
 /* ===== "Coming soon" service page ===== */
-:root .cs { position: relative; overflow: hidden; isolation: isolate; background: var(--p-bg-2); }
+:root .cs { position: relative; overflow: hidden; isolation: isolate; background: transparent; /* same page background as About Us */ }
 :root .cs-blob { position: absolute; z-index: -1; border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; opacity: 0.5; animation: cs-morph 16s ease-in-out infinite; pointer-events: none; }
 :root .cs-blob-a { width: 420px; height: 420px; left: -120px; top: -100px; background: color-mix(in srgb, var(--p-gold-2) 22%, transparent); }
 :root .cs-blob-b { width: 460px; height: 460px; right: -140px; bottom: -150px; background: color-mix(in srgb, var(--brand) 15%, transparent); animation-delay: -7s; }
@@ -31,3 +31,6 @@
 
 @media (max-width: 480px) { :root .cs-btn { width: 100%; justify-content: center; } }
 @media (prefers-reduced-motion: reduce) { :root .cs-blob, :root .cs-gear, :root .cs-badge, :root .cs-dots i, :root .cs-bar i { animation: none; } }
+
+/* decorative background blobs hidden so this page matches About Us and the other inner pages */
+:root .cs-blob { display: none; }

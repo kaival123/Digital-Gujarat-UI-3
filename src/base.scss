@@ -58,7 +58,7 @@ img { max-width: 100%; }
     backdrop-filter: blur(18px) saturate(1.6); box-shadow: var(--sh-2); transition: box-shadow var(--t-base), background var(--t-base);
   }
   &.scrolled .header-inner { box-shadow: var(--sh-3); background: color-mix(in srgb, var(--dg-card) 92%, transparent); }
-  .brand { display: flex; align-items: center; gap: 12px; .emblem { height: 44px; } .logo { height: 40px; } }
+  .brand { display: flex; align-items: center; gap: 14px; flex: none; img { display: block; width: auto; } .emblem { height: 44px; } .dst { height: 40px; } .logo { height: 40px; } }
   .main-nav { flex: 1; min-width: 0; }
   .p-menubar { border: 0; background: transparent; justify-content: flex-end; }
 }
@@ -138,8 +138,10 @@ img { max-width: 100%; }
   .site-footer .footer-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
-  .brand .emblem { height: 40px !important; }
-  .brand .logo { height: 38px !important; }
+  .brand { gap: 8px !important; }
+  .brand .emblem { height: 34px !important; }
+  .brand .dst { height: 28px !important; }
+  .brand .logo { height: 32px !important; }
   .topbar .social { display: none; }
 }
 

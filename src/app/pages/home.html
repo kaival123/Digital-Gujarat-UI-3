@@ -5,8 +5,8 @@
     <h1 class="sr-only">Digital Gujarat – Government Services, One Platform</h1>
     <div class="container">
       <div class="hero-stage" [class.ready]="heroReady()" role="region" aria-roledescription="carousel" aria-label="Digital Gujarat highlights"
-           (mouseenter)="heroPaused.set(true)" (mouseleave)="heroPaused.set(false)" (focusin)="heroPaused.set(true)" (focusout)="heroPaused.set(false)"
-           (pointerdown)="heroDown($event)" (pointerup)="heroUp($event)" (keydown)="heroKey($event)">
+           (pointerenter)="heroEnter($event)" (pointerleave)="heroLeave()" (focusin)="heroFocusIn($event)" (focusout)="heroFocusOut($event)"
+           (pointerdown)="heroDown($event)" (pointerup)="heroUp($event)" (pointercancel)="heroLeave()" (keydown)="heroKey($event)">
         <div class="hero-track" aria-live="off">
           @for (s of heroRing; track $index; let i = $index) {
             <div class="hero-slide slab" [attr.data-o]="heroOffset(i)" [attr.aria-hidden]="heroOffset(i) !== 0 ? 'true' : null" [attr.inert]="heroOffset(i) !== 0 ? '' : null"

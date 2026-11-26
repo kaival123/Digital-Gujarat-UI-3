@@ -1,0 +1,69 @@
+{
+  "_note": "Sample district / taluka / village master data for the certificate application form. Replace with the live master-data API.",
+  "districts": [
+    {
+      "code": "AHM", "en": "Ahmedabad", "gu": "અમદાવાદ",
+      "talukas": [
+        { "code": "AHM-DAS", "en": "Daskroi", "gu": "દસ્ક્રોઈ", "villages": [["Bopal", "બોપલ"], ["Ghuma", "ઘુમા"], ["Bakrol", "બાકરોલ"]] },
+        { "code": "AHM-SAN", "en": "Sanand", "gu": "સાણંદ", "villages": [["Sanand", "સાણંદ"], ["Changodar", "ચાંગોદર"], ["Moraiya", "મોરૈયા"]] },
+        { "code": "AHM-DHO", "en": "Dholka", "gu": "ધોળકા", "villages": [["Dholka", "ધોળકા"], ["Koth", "કોઠ"]] },
+        { "code": "AHM-VIR", "en": "Viramgam", "gu": "વિરમગામ", "villages": [["Viramgam", "વિરમગામ"], ["Nalsarovar", "નળસરોવર"]] },
+        { "code": "AHM-BAV", "en": "Bavla", "gu": "બાવળા", "villages": [["Bavla", "બાવળા"], ["Kerala", "કેરાળા"]] }
+      ]
+    },
+    {
+      "code": "GNR", "en": "Gandhinagar", "gu": "ગાંધીનગર",
+      "talukas": [
+        { "code": "GNR-GNR", "en": "Gandhinagar", "gu": "ગાંધીનગર", "villages": [["Adalaj", "અડાલજ"], ["Pethapur", "પેથાપુર"], ["Randheja", "રાંધેજા"]] },
+        { "code": "GNR-KAL", "en": "Kalol", "gu": "કલોલ", "villages": [["Kalol", "કલોલ"], ["Saij", "સઈજ"]] },
+        { "code": "GNR-MAN", "en": "Mansa", "gu": "માણસા", "villages": [["Mansa", "માણસા"], ["Itadra", "ઈટાદરા"]] },
+        { "code": "GNR-DEH", "en": "Dehgam", "gu": "દહેગામ", "villages": [["Dehgam", "દહેગામ"], ["Bahiyal", "બહિયલ"]] }
+      ]
+    },
+    {
+      "code": "PNM", "en": "Panchmahals", "gu": "પંચમહાલ",
+      "talukas": [
+        { "code": "PNM-GOD", "en": "Godhra", "gu": "ગોધરા", "villages": [["Godhra", "ગોધરા"], ["Vavdi", "વાવડી"], ["Orvada", "ઓરવાડા"]] },
+        { "code": "PNM-KAL", "en": "Kalol", "gu": "કાલોલ", "villages": [["Vejalpur", "વેજલપુર"], ["Kalol", "કાલોલ"], ["Derol", "ડેરોલ"]] },
+        { "code": "PNM-HAL", "en": "Halol", "gu": "હાલોલ", "villages": [["Halol", "હાલોલ"], ["Pavagadh", "પાવાગઢ"], ["Champaner", "ચાંપાનેર"]] },
+        { "code": "PNM-SHE", "en": "Shehera", "gu": "શહેરા", "villages": [["Shehera", "શહેરા"]] },
+        { "code": "PNM-GHO", "en": "Ghoghamba", "gu": "ઘોઘંબા", "villages": [["Ghoghamba", "ઘોઘંબા"]] },
+        { "code": "PNM-JAM", "en": "Jambughoda", "gu": "જાંબુઘોડા", "villages": [["Jambughoda", "જાંબુઘોડા"]] },
+        { "code": "PNM-MOR", "en": "Morva Hadaf", "gu": "મોરવા હડફ", "villages": [["Morva", "મોરવા"]] }
+      ]
+    },
+    {
+      "code": "VAD", "en": "Vadodara", "gu": "વડોદરા",
+      "talukas": [
+        { "code": "VAD-VAD", "en": "Vadodara", "gu": "વડોદરા", "villages": [["Bhayli", "ભાયલી"], ["Sevasi", "સેવાસી"], ["Undera", "ઉંડેરા"]] },
+        { "code": "VAD-PAD", "en": "Padra", "gu": "પાદરા", "villages": [["Padra", "પાદરા"], ["Mobha", "મોભા"]] },
+        { "code": "VAD-KAR", "en": "Karjan", "gu": "કરજણ", "villages": [["Karjan", "કરજણ"], ["Kandari", "કંડારી"]] },
+        { "code": "VAD-SAV", "en": "Savli", "gu": "સાવલી", "villages": [["Savli", "સાવલી"], ["Manjusar", "મંજુસર"]] },
+        { "code": "VAD-DAB", "en": "Dabhoi", "gu": "ડભોઈ", "villages": [["Dabhoi", "ડભોઈ"]] },
+        { "code": "VAD-VAG", "en": "Vaghodia", "gu": "વાઘોડિયા", "villages": [["Vaghodia", "વાઘોડિયા"]] }
+      ]
+    },
+    {
+      "code": "SUR", "en": "Surat", "gu": "સુરત",
+      "talukas": [
+        { "code": "SUR-CHO", "en": "Choryasi", "gu": "ચોર્યાસી", "villages": [["Hazira", "હજીરા"], ["Ichchhapor", "ઇચ્છાપોર"]] },
+        { "code": "SUR-OLP", "en": "Olpad", "gu": "ઓલપાડ", "villages": [["Olpad", "ઓલપાડ"], ["Sayan", "સાયણ"]] },
+        { "code": "SUR-KAM", "en": "Kamrej", "gu": "કામરેજ", "villages": [["Kamrej", "કામરેજ"], ["Kholvad", "ખોલવડ"]] },
+        { "code": "SUR-BAR", "en": "Bardoli", "gu": "બારડોલી", "villages": [["Bardoli", "બારડોલી"], ["Kadod", "કડોદ"]] },
+        { "code": "SUR-MAN", "en": "Mandvi", "gu": "માંડવી", "villages": [["Mandvi", "માંડવી"]] },
+        { "code": "SUR-PAL", "en": "Palsana", "gu": "પલસાણા", "villages": [["Palsana", "પલસાણા"]] }
+      ]
+    },
+    {
+      "code": "RAJ", "en": "Rajkot", "gu": "રાજકોટ",
+      "talukas": [
+        { "code": "RAJ-RAJ", "en": "Rajkot", "gu": "રાજકોટ", "villages": [["Madhapar", "માધાપર"], ["Munjka", "મુંજકા"]] },
+        { "code": "RAJ-GON", "en": "Gondal", "gu": "ગોંડલ", "villages": [["Gondal", "ગોંડલ"], ["Virpur", "વીરપુર"]] },
+        { "code": "RAJ-JET", "en": "Jetpur", "gu": "જેતપુર", "villages": [["Jetpur", "જેતપુર"]] },
+        { "code": "RAJ-DHO", "en": "Dhoraji", "gu": "ધોરાજી", "villages": [["Dhoraji", "ધોરાજી"]] },
+        { "code": "RAJ-UPL", "en": "Upleta", "gu": "ઉપલેટા", "villages": [["Upleta", "ઉપલેટા"]] },
+        { "code": "RAJ-JAS", "en": "Jasdan", "gu": "જસદણ", "villages": [["Jasdan", "જસદણ"]] }
+      ]
+    }
+  ]
+}

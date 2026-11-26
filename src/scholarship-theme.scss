@@ -1,0 +1,110 @@
+/* ===== Scholarship Schemes · Blue + Saffron theme =====
+   Scoped to the two scholarship pages (their component hosts), so the rest of the site keeps its own theme.
+   Blue  = headings, navigation, primary buttons, key UI.   Saffron = highlights, badges, icons, accents, CTAs, hover. */
+$S: ':root :is(app-scholarships, app-scholarship-detail)';
+
+/* Colours follow the active theme from the theme picker:
+   --sb* = the theme's main colour (--brand / --brand-2), --ss* = the site accent (--accent). */
+#{$S} {
+  --sb: var(--brand);
+  --sb-dark: color-mix(in srgb, var(--brand) 75%, #000000);
+  --sb-soft: color-mix(in srgb, var(--brand) 8%, #ffffff);
+  --sb-line: var(--p-line);   /* borders: the site's neutral line colour, as on About Us */
+  --ss: var(--accent);
+  --ss-dark: color-mix(in srgb, var(--accent) 70%, #000000);
+  --ss-soft: color-mix(in srgb, var(--accent) 10%, #ffffff);
+  --ss-line: color-mix(in srgb, var(--accent) 35%, #ffffff);
+  --sch-grad: linear-gradient(135deg, var(--sb) 0%, var(--brand-2) 55%, var(--ss) 140%);
+  --sch-accent: linear-gradient(90deg, var(--sb), var(--ss));
+}
+:root.app-dark :is(app-scholarships, app-scholarship-detail) {
+  --sb: color-mix(in srgb, var(--brand) 55%, #ffffff); --sb-dark: color-mix(in srgb, var(--brand) 35%, #ffffff);
+  --sb-soft: color-mix(in srgb, var(--brand) 14%, transparent); --sb-line: var(--p-line);
+  --ss: var(--accent); --ss-dark: color-mix(in srgb, var(--accent) 70%, #ffffff);
+  --ss-soft: color-mix(in srgb, var(--accent) 12%, transparent); --ss-line: color-mix(in srgb, var(--accent) 32%, transparent);
+  --sch-grad: linear-gradient(135deg, color-mix(in srgb, var(--brand) 45%, #000000) 0%, var(--brand) 60%, color-mix(in srgb, var(--accent) 60%, #000000) 140%);
+}
+
+/* banner and page background: none here on purpose — the scholarship pages use the site's own page-hero and
+   page background, so they look like About Us and every other inner page */
+
+/* ---- filters ---- */
+#{$S} .sch-search input, #{$S} .sch-level select { border-color: var(--sb-line);
+  &:focus { border-color: var(--sb); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sb) 18%, transparent); } }
+#{$S} .sch-search i { color: var(--ss); }
+#{$S} .sch-open input { accent-color: var(--ss); }
+#{$S} .sch-cats button { border-color: var(--sb-line); color: var(--sb-dark);
+  &:hover { border-color: var(--ss); color: var(--ss-dark); background: var(--ss-soft); }
+  &.on { background: var(--sb); border-color: var(--sb); color: #fff; box-shadow: 0 6px 14px -8px var(--sb); } }
+#{$S} .sch-count b { color: var(--sb); }
+
+/* ---- cards ---- */
+#{$S} .sch-card { border-color: var(--sb-line);
+  &::before { background: var(--sch-accent); opacity: 1; height: 3px; }
+  h2 { color: var(--sb-dark); }
+  &:hover { border-color: var(--ss); box-shadow: 0 16px 34px -18px color-mix(in srgb, var(--sb) 55%, transparent), 0 0 0 1px var(--ss-line);
+    h2 { color: var(--sb); } .sch-more { color: var(--ss-dark); } }
+  &:focus-visible { outline-color: var(--ss); } }
+#{$S} .sch-ic { background: var(--ss-soft) !important; color: var(--ss-dark) !important; border: 1px solid var(--ss-line); }
+#{$S} .sch-tag { background: var(--sb-soft); border-color: var(--sb-line); color: var(--sb-dark); }
+#{$S} .sch-status {
+  &[data-s='open'] { background: var(--ss); color: #fff; }
+  &[data-s='upcoming'] { background: var(--sb-soft); color: var(--sb); box-shadow: inset 0 0 0 1px var(--sb-line); }
+  &[data-s='closed'] { background: color-mix(in srgb, var(--p-muted) 12%, var(--p-surface)); color: var(--p-muted); } }
+#{$S} .sch-elig i { color: var(--ss); }
+#{$S} .sch-foot { border-top-color: var(--sb-line); }
+#{$S} .sch-amt b { color: var(--sb); }
+#{$S} .sch-more { color: var(--sb); }
+#{$S} .sch-dates i { color: var(--ss); }
+
+/* ---- load more / misc ---- */
+#{$S} .sch-loadmore button { background: var(--sb); border-color: var(--sb); color: #fff; box-shadow: 0 10px 22px -12px var(--sb);
+  &:hover { background: var(--ss); border-color: var(--ss); color: #fff; box-shadow: 0 10px 22px -12px var(--ss); }
+  &:focus-visible { outline-color: var(--ss); } }
+#{$S} .sch-end i { color: var(--ss); }
+#{$S} .sch-empty button { border-color: var(--sb); color: var(--sb); &:hover { background: var(--ss-soft); border-color: var(--ss); color: var(--ss-dark); } }
+#{$S} .sch-note { border-color: var(--ss-line); background: var(--ss-soft); i { color: var(--ss-dark); } }
+
+/* ===== details page ===== */
+#{$S} .sch-back { border-color: var(--sb-line); color: var(--sb);
+  &:hover { border-color: var(--ss); color: var(--ss-dark); background: var(--ss-soft); } }
+#{$S} .cert-card { border-color: var(--sb-line);
+  &::before { background: var(--sch-accent); } }
+#{$S} .sd-overview-text { color: var(--p-ink); }
+#{$S} .sd-cols h3 { color: var(--sb-dark); i { color: var(--ss); } }
+#{$S} .ov-list i { color: var(--ss); }
+#{$S} .ov-chips { background: var(--sb-soft); border-color: var(--sb-line); li { border-color: var(--sb-line); color: var(--sb-dark); } }
+#{$S} .sd-amt { background: var(--sch-grad); small { color: rgba(255, 255, 255, 0.8); } b { color: #fff; } }
+#{$S} .sd-facts dl div { border-bottom-color: var(--sb-line); } #{$S} .sd-facts dd { color: var(--sb-dark); }
+#{$S} .sd-window[data-s='upcoming'] { background: var(--sb-soft); color: var(--sb); }
+#{$S} .sd-jump { background: var(--sb); box-shadow: 0 10px 22px -12px var(--sb);
+  &:hover { background: var(--ss); box-shadow: 0 10px 22px -12px var(--ss); } }
+
+/* ---- application form ---- */
+#{$S} .cert-pill { border-color: var(--ss-line); background: var(--ss-soft); color: var(--ss-dark); i { background: var(--ss); color: #fff; } }
+#{$S} .cert-box { border-color: var(--sb-line); legend { color: var(--sb); i { color: var(--ss); } } }
+#{$S} .cert-f > span { color: var(--sb-dark); }
+#{$S} .cert-f input:focus, #{$S} .cert-f textarea:focus, #{$S} .sd-select:focus { border-color: var(--sb); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sb) 16%, transparent); }
+#{$S} .cert-money i { color: var(--ss-dark); }
+#{$S} .sd-check input, #{$S} .sd-declare input { accent-color: var(--sb); }
+#{$S} .cert-declare { background: var(--ss-soft); border-color: var(--ss-line); }
+#{$S} .sd-docs li { border-color: var(--sb-line); background: color-mix(in srgb, var(--sb-soft) 60%, var(--p-surface)); }
+#{$S} .sd-docs li:not(.done) .dz-ic { background: var(--ss-soft); color: var(--ss-dark); }
+#{$S} .dz-btn { border-color: var(--sb); color: var(--sb);
+  &:hover:not(:disabled) { background: var(--ss); border-color: var(--ss); color: #fff; } }
+#{$S} .cert-actions { border-top-color: var(--sb-line); }
+
+/* buttons: blue primary, outlined blue; saffron on hover */
+#{$S} .p-button:not(.p-button-outlined):not(.p-button-text):not(:disabled) { background: var(--sb) !important; border-color: var(--sb) !important; color: #fff !important; box-shadow: 0 10px 22px -12px var(--sb);
+  &:hover { background: var(--ss) !important; border-color: var(--ss) !important; box-shadow: 0 10px 22px -12px var(--ss); } }
+#{$S} .p-button.p-button-outlined { border-color: var(--sb) !important; color: var(--sb) !important; background: transparent !important;
+  &:hover { border-color: var(--ss) !important; color: var(--ss-dark) !important; background: var(--ss-soft) !important; } }
+#{$S} .p-button:disabled { background: color-mix(in srgb, var(--sb) 35%, var(--p-surface)) !important; border-color: transparent !important; color: #fff !important; }
+
+/* success state */
+#{$S} .cert-done-ic { background: var(--ss); box-shadow: 0 0 0 8px var(--ss-soft); }
+#{$S} .cert-done h2 { color: var(--sb-dark); }
+#{$S} .cert-meta { background: var(--sb-soft); border-color: var(--sb-line); dd { color: var(--sb-dark); } }
+
+/* helper notes ("Fixed by this scheme", "Limit: ₹2,50,000") are guidance, not errors */
+#{$S} .cert-err.sd-hint { color: var(--p-muted); font-weight: 500; }

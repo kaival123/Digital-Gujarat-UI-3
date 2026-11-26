@@ -1,11 +1,13 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from 'primeng/tabs';
 import { TableModule } from 'primeng/table';
 import { Tag } from 'primeng/tag';
 import { Reveal } from '../shared/motion';
 import { PageHero } from '../shared/page-hero';
-import { abs } from '../shared/site';
+import { abs, LATEST_TAB } from '../shared/site';
 import circulars from '../data/circulars.json';
 
 @Component({
@@ -22,7 +24,7 @@ import circulars from '../data/circulars.json';
           <a pButton [outlined]="true" href="https://gil.gujarat.gov.in/Tenders" target="_blank" rel="noopener">Government Tenders <i class="pi pi-external-link"></i></a>
         </aside>
         <div class="lu-main">
-        <p-tabs value="news" appReveal="up">
+        <p-tabs [value]="tab()" (valueChange)="selectTab($any($event))" appReveal="up">
           <p-tablist>
             <p-tab value="news"><i class="pi pi-megaphone"></i>&nbsp; News &amp; Updates</p-tab>
             <p-tab value="circular"><i class="pi pi-file"></i>&nbsp; Circular / Notification</p-tab>
@@ -64,6 +66,15 @@ import circulars from '../data/circulars.json';
   `,
 })
 export class LatestUpdatePage {
+  /** Shared with the header's Latest Update dropdown, which sets it on click (even when already on this page). */
+  tab = LATEST_TAB;
+  constructor() {
+    // deep links (?tab=circular) and back/forward also pick the tab
+    inject(ActivatedRoute).queryParamMap.pipe(takeUntilDestroyed()).subscribe((q) => {
+      LATEST_TAB.set(q.get('tab') === 'circular' ? 'circular' : 'news');
+    });
+  }
+  selectTab(t: string) { if (t === 'news' || t === 'circular') LATEST_TAB.set(t); }
   rows = circulars.filter((c) => !!c.url).map((c) => ({ ...c, link: abs(c.url) }));
   news = [
     { date: '17/08/2026', text: 'If you are unable to access scholarship services via Digital Gujarat, you can avail of them at the Gujarat Scholarship portal.', links: [{ label: 'gssp.gujarat.gov.in', url: 'https://gssp.gujarat.gov.in' }] },

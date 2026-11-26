@@ -181,8 +181,10 @@ export class A11yService {
       const sync = () => {
         this.connection.set(conn.effectiveType ?? 'unknown');
         this.saveData.set(!!conn.saveData);
-        // Only auto-enable light mode when the visitor has never chosen either way.
-        if (this.slowNetwork() && this.saved.lite === undefined) this.prefs.update((p) => ({ ...p, lite: true }));
+        // Only auto-enable light mode when the visitor has never chosen either way, and only on an explicit
+        // Save-Data opt-in. effectiveType is a rough estimate (it reports "2g"/"3g" on plenty of fast desktop and
+        // localhost connections), and acting on it switched off every animation and the hero slider autoplay.
+        if (this.saveData() && this.saved.lite === undefined) this.prefs.update((p) => ({ ...p, lite: true }));
       };
       sync();
       conn.addEventListener('change', sync);

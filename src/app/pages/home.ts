@@ -2,14 +2,11 @@ import { afterNextRender, Component, computed, effect, inject, signal, ChangeDet
 import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
 import { Counter, Reveal } from '../shared/motion';
 import { GlimpseSlider } from '../shared/glimpse-slider';
-import faqData from '../data/faq.json';
 import { SearchService } from '../shared/search.service';
 import citizenData from '../data/citizen.json';
 import sugamData from '../data/sugam.json';
 import dssData from '../data/dss.json';
 import jansevaData from '../data/janseva.json';
-import linkedData from '../data/linked.json';
-import videoData from '../data/videos.json';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
@@ -40,43 +37,62 @@ export class HomePage {
     { key: 'janseva', label: 'Janseva', icon: 'pi pi-building', route: '/services/janseva', total: jansevaData.length, items: this.pick(jansevaData), blurb: 'Affidavits and services from Janseva Kendras.' },
   ];
 
-  faqs = faqData.slice(0, 4);
+  faqs = [
+    { q: 'How can I apply for an Income Certificate online?', a: ["Log in with Citizen Login, search for 'Income Certificate', fill in the application form, upload the required documents and submit. You can track the status under 'My Applications'."] },
+    { q: 'What documents are required for a Domicile Certificate?', a: ['Proof of identity, proof of residence in Gujarat (such as a ration card, electricity bill or property document) and a birth certificate or school leaving certificate are generally required.'] },
+    { q: 'How can I track the status of my application?', a: ["After logging in, open 'My Applications' to see the real-time status of every application and download the certificate once it is approved."] },
+    { q: 'Is registration mandatory to apply for services?', a: ['Yes. A one-time registration through Citizen Login is required so that your applications, documents and certificates are linked to your account.'] },
+  ];
   cat = signal('citizen');
   catData = computed(() => this.explorer.find((c) => c.key === this.cat()) ?? this.explorer[0]);
 
   facts = [
-    { value: citizenData.length + sugamData.length + dssData.length + jansevaData.length + '+', label: 'Services online' },
-    { value: linkedData.rows.length + '', label: 'Linked dept. services' },
-    { value: '10–6', label: 'Helpdesk, 7 days' },
+    { value: 'Apply Online', label: 'from Anywhere' },
+    { value: 'Track Application', label: 'in Real-time' },
+    { value: 'Get Certificates', label: 'Digitally' },
   ];
 
+  /* Browse Services by Department */
   quick = [
-    { icon: 'pi pi-users', label: 'Citizen', sub: 'Certificates and passes', route: '/services/citizen' },
-    { icon: 'pi pi-bolt', label: 'Sugam', sub: 'Online in minutes', route: '/sugam-digital-gujarat' },
-    { icon: 'pi pi-building', label: 'Janseva', sub: 'Kendra services', route: '/services/janseva' },
-    { icon: 'pi pi-file-pdf', label: 'Manuals', sub: 'Step-by-step PDFs', route: '/user-manual' },
-    { icon: 'pi pi-headphones', label: 'Help', sub: '10 AM to 6 PM daily', route: '/help-desk' },
+    { icon: 'pi pi-building', label: 'Revenue', sub: 'Land, property, certificates', route: '/services/citizen' },
+    { icon: 'pi pi-book', label: 'Education', sub: 'Scholarships, admissions', route: '/scholarships' },
+    { icon: 'pi pi-shopping-cart', label: 'Food & Civil Supplies', sub: 'Ration card, NFSA, PDS', route: '/sugam-digital-gujarat' },
+    { icon: 'pi pi-sun', label: 'Agriculture', sub: 'Farmer schemes, subsidies', route: '/services/digital-sevasetu' },
+    { icon: 'pi pi-heart', label: 'Health & Family Welfare', sub: 'Health schemes, registration', route: '/services/digital-sevasetu' },
+    { icon: 'pi pi-users', label: 'Social Justice', sub: 'Welfare for SC/ST/OBC', route: '/services/digital-sevasetu' },
+    { icon: 'pi pi-briefcase', label: 'Labour & Employment', sub: 'Labour services, registrations', route: '/services/digital-sevasetu' },
+    { icon: 'pi pi-user', label: 'Women & Child', sub: 'Empowerment schemes', route: '/services/digital-sevasetu' },
+    { icon: 'pi pi-home', label: 'Urban Development', sub: 'Municipal services, permissions', route: '/services/linked' },
+    { icon: 'pi pi-th-large', label: 'More Departments', sub: 'Explore all departments', route: '/services/citizen' },
   ];
 
+  /* Key Online Services */
+  keyServices = ['Birth Certificate', 'Death Certificate', 'Income Certificate', 'Domicile Certificate', 'Caste Certificate'];
+
+  /* Highlights */
   ticker = [
-    'Post-Matric Scholarship 2026-27: SC students re-open 01/10/2026 – 31/10/2026',
-    'ST students: applications for 2026-27 open 01/09/2026 – 30/11/2026',
-    'Scholarship services also available at gssp.gujarat.gov.in',
-    'Use the SANDES app to get Digital Gujarat login OTPs instantly',
+    'Applications for Post Matric Scholarship are now open.',
+    'Digital Gujarat – Enhanced citizen experience with new services.',
+    'Income Certificate service has been updated with faster approval.',
   ];
 
+  /* Our Impact */
   stats = [
-    { icon: 'pi pi-th-large', value: citizenData.length + sugamData.length + dssData.length + jansevaData.length, suffix: '+', label: 'Services online' },
-    { icon: 'pi pi-link', value: linkedData.rows.length, suffix: '', label: 'Linked department services' },
-    { icon: 'pi pi-video', value: videoData.length, suffix: '', label: 'Video tutorials' },
-    { icon: 'pi pi-users', value: 486718029, suffix: '', label: 'Portal visitors' },
+    { icon: 'pi pi-th-large', value: 500, decimals: 0, suffix: '+', label: 'Government Services' },
+    { icon: 'pi pi-file-edit', value: 5.2, decimals: 1, suffix: ' Cr+', label: 'Applications Processed' },
+    { icon: 'pi pi-verified', value: 4.8, decimals: 1, suffix: ' Cr+', label: 'Certificates Issued' },
+    { icon: 'pi pi-map-marker', value: 100, decimals: 0, suffix: '%', label: 'District Coverage' },
   ];
 
+  /* Success Stories */
+  story = { quote: 'I got my Income Certificate online in just 2 days. The process was simple and completely paperless.', name: 'Kinjal Patel', place: 'Ahmedabad' };
+
+  /* How It Works */
   steps = [
-    { icon: 'pi pi-user-plus', title: 'Register', text: "Click Login / Register and choose Citizen Login. You'll be taken to the Citizen SSO portal." },
-    { icon: 'pi pi-search', title: 'Choose a service', text: 'Search or browse certificates, schemes and scholarships — for example Income Certificate.' },
-    { icon: 'pi pi-upload', title: 'Upload documents', text: 'Add proof such as salary slips or bank statements and submit your application.' },
-    { icon: 'pi pi-check-circle', title: 'Track status', text: "Follow progress anytime under 'My Applications' after you log in." },
+    { icon: 'pi pi-search', title: 'Search Service', text: 'Find the service you need.' },
+    { icon: 'pi pi-pen-to-square', title: 'Apply Online', text: 'Fill the application form.' },
+    { icon: 'pi pi-upload', title: 'Upload Documents', text: 'Submit required documents.' },
+    { icon: 'pi pi-download', title: 'Track & Download', text: 'Check status and download certificate.' },
   ];
 
   openSearch(q = '') { this.searchSvc.show(q); }
@@ -89,14 +105,24 @@ export class HomePage {
 
   slides = [
     {
-      title: 'Discover', accent: 'Government Schemes', rest: 'for you…',
-      sub: 'Find personalised schemes based on eligibility',
-      img: A + 'img/slider/hero-farmer-clean.png', shape: 'rounded',
+      title: 'One Platform for', accent: 'Citizen Services', rest: 'of Gujarat',
+      sub: 'Apply online from anywhere, track your application in real-time and get certificates digitally.',
+      img: A + 'img/GlimpsesSlider/statueofunity.png', shape: 'rounded',
+      cards: [
+        { icon: 'pi pi-book', b: 'Students', small: 'Scholarships' },
+        { icon: 'pi pi-sun', b: 'Farmers', small: 'Agri support' },
+        { icon: 'pi pi-heart', b: 'Women', small: 'Welfare schemes' },
+      ],
     },
     {
-      title: 'One Stop', accent: 'Platform', rest: '',
-      sub: 'Access, apply and track government schemes and application status effortlessly',
+      title: 'Viksit Gujarat', accent: 'through Digital Services', rest: '',
+      sub: 'Citizen-centric services for all sections of society — students, farmers and women.',
       img: A + 'img/slider/hero-team-clean.png', shape: 'circle',
+      cards: [
+        { icon: 'pi pi-eye', b: 'Transparent', small: 'Governance' },
+        { icon: 'pi pi-users', b: 'Citizen', small: 'Empowerment' },
+        { icon: 'pi pi-globe', b: 'Digital', small: 'Inclusiveness' },
+      ],
     },
   ];
 
@@ -108,19 +134,20 @@ export class HomePage {
     { title: 'Linked Services', icon: A + 'img/icon/eolservice.svg', route: '/services/linked' },
   ];
 
+  /* Popular Services */
   trending = [
-    { rank: '01', title: 'Income Certificate', img: A + 'citizen/Income.png' },
-    { rank: '02', title: 'Addition of Name in Ration Card', img: A + 'citizen/AddName_RC.png' },
-    { rank: '03', title: 'Widow Certificate', img: A + 'citizen/Widow.png' },
-    { rank: '04', title: 'Domicile Certificate (By Birth)', img: A + 'citizen/Domicile.png' },
-    { rank: '05', title: 'Senior Citizen Certificate', img: A + 'citizen/SeniorCitizen.png' },
+    { rank: '01', title: 'Income Certificate', desc: 'Apply for Income Certificate online.', img: A + 'citizen/Income.png' },
+    { rank: '02', title: 'Domicile Certificate', desc: 'Apply for Domicile Certificate (Resident Certificate).', img: A + 'citizen/Domicile.png' },
+    { rank: '03', title: 'Caste Certificate', desc: 'Apply for Caste Certificate (SC / ST / SEBC / OBC).', img: A + 'site/images/JansevaService/caste_certificate.png' },
+    { rank: '04', title: 'Scholarship Application', desc: 'Apply for various scholarship schemes of Gujarat.', img: A + 'site/images/JansevaService/scholarship.png' },
   ];
 
+  /* Featured Schemes */
   perks = [
-    { icon: 'pi pi-home', text: 'Apply from home — skip the office queue' },
-    { icon: 'pi pi-file-check', text: 'Income, caste and domicile certificates' },
-    { icon: 'pi pi-id-card', text: 'Ration card services and 20+ essential services online' },
-    { icon: 'pi pi-mobile', text: 'Track your application status anytime' },
+    { icon: 'pi pi-book', text: 'મુખ્યમંત્રી શિક્ષણ સહાય યોજના — Mukhyamantri Shikshan Sahay Yojana' },
+    { icon: 'pi pi-sun', text: 'મુખ્યમંત્રી કૃષિ સહાય યોજના — Mukhyamantri Krushi Sahay Yojana' },
+    { icon: 'pi pi-heart', text: 'મહિલા સશક્તિકરણ યોજના — Women Empowerment Schemes' },
+    { icon: 'pi pi-users', text: 'Services for everyone — students, farmers and women' },
   ];
 
 
@@ -128,7 +155,7 @@ export class HomePage {
   a11y = inject(A11yService);
   /* ---- hero: 3D glass-slab slider. The slides are doubled into a ring of 4 so the wrap-around always happens
      off-stage; copies are aria-hidden + inert, so assistive tech and Tab only ever see the real slides. ---- */
-  readonly heroMs = 7000;
+  readonly heroMs = 5000;
   heroRing = [...this.slides, ...this.slides];
   heroIdx = signal(0);
   heroPaused = signal(false);
@@ -165,14 +192,13 @@ export class HomePage {
     obs.observe(el, { attributes: true, attributeFilter: ['class'] });
     go();
   });
-  /* Pause while a mouse hovers or a KEYBOARD user is inside. A mouse click on an arrow/dot also moves focus inside the
-     stage; pausing on that kept autoplay stopped until the user clicked elsewhere. Touch never pauses (a tap fires
-     enter with no matching leave). */
-  private heroHover = false;
+  /* Autoplay keeps running under the mouse: the banner fills the first screen, so pausing on hover meant it almost
+     never moved. It still pauses while a KEYBOARD user is inside (a mouse click on an arrow/dot also moves focus
+     inside, so only :focus-visible counts), and stays off when the user turns motion off in the accessibility panel. */
   private heroKbFocus = false;
-  private heroSyncPause() { this.heroPaused.set(this.heroHover || this.heroKbFocus); }
-  heroEnter(e: PointerEvent) { if (e.pointerType === 'mouse') { this.heroHover = true; this.heroSyncPause(); } }
-  heroLeave() { this.heroHover = false; this.heroSwipe = false; this.heroSyncPause(); }
+  private heroSyncPause() { this.heroPaused.set(this.heroKbFocus); }
+  heroEnter(_e: PointerEvent) {}
+  heroLeave() { this.heroSwipe = false; }
   heroFocusIn(e: FocusEvent) { this.heroKbFocus = (e.target as Element | null)?.matches?.(':focus-visible') ?? false; this.heroSyncPause(); }
   heroFocusOut(e: FocusEvent) {
     const next = e.relatedTarget as Node | null;

@@ -35,22 +35,26 @@ export class Reveal implements OnInit, OnDestroy {
 export class Counter implements OnInit, OnDestroy {
   appCounter = input.required<number>();
   duration = input(1600);
+  /** digits after the decimal point, for values such as 5.2 */
+  decimals = input(0);
   private el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   private io?: IntersectionObserver;
   private raf = 0;
+  private fmt(n: number) { const d = this.decimals(); return n.toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d }); }
 
   ngOnInit() {
     const target = this.appCounter();
     this.el.textContent = '0';
     const reduce = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (typeof IntersectionObserver === 'undefined' || reduce) { this.el.textContent = target.toLocaleString('en-IN'); return; }
+    if (typeof IntersectionObserver === 'undefined' || reduce) { this.el.textContent = this.fmt(target); return; }
     this.io = new IntersectionObserver((entries) => {
       if (!entries.some((e) => e.isIntersecting)) return;
       this.io?.disconnect();
       const t0 = performance.now(), d = this.duration();
       const tick = (t: number) => {
         const p = Math.min(1, (t - t0) / d);
-        this.el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))).toLocaleString('en-IN');
+        const v = target * (1 - Math.pow(1 - p, 3)), k = Math.pow(10, this.decimals());
+        this.el.textContent = this.fmt(p < 1 ? Math.round(v * k) / k : target);
         if (p < 1) this.raf = requestAnimationFrame(tick);
       };
       this.raf = requestAnimationFrame(tick);

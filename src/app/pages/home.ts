@@ -107,7 +107,7 @@ export class HomePage {
     {
       title: 'One Platform for', accent: 'Citizen Services', rest: 'of Gujarat',
       sub: 'Apply online from anywhere, track your application in real-time and get certificates digitally.',
-      img: A + 'img/GlimpsesSlider/statueofunity.png', shape: 'rounded',
+      img: A + 'img/slider/hero-citizen-tablet.jpg', shape: 'rounded', /* Unsplash License: photo-1656236607879 */
       cards: [
         { icon: 'pi pi-book', b: 'Students', small: 'Scholarships' },
         { icon: 'pi pi-sun', b: 'Farmers', small: 'Agri support' },
@@ -117,7 +117,7 @@ export class HomePage {
     {
       title: 'Viksit Gujarat', accent: 'through Digital Services', rest: '',
       sub: 'Citizen-centric services for all sections of society — students, farmers and women.',
-      img: A + 'img/slider/hero-team-clean.png', shape: 'circle',
+      img: A + 'img/slider/hero-statue-of-unity.jpg', shape: 'circle', /* Unsplash License: photo-1631983097767 */
       cards: [
         { icon: 'pi pi-eye', b: 'Transparent', small: 'Governance' },
         { icon: 'pi pi-users', b: 'Citizen', small: 'Empowerment' },
@@ -231,10 +231,10 @@ export class HomePage {
   rotateBy(d: number) { this.rot.update((r) => r + d); }
 
   glimpses = [
-    { title: 'Great Ran Of Kutch', img: A + 'img/GlimpsesSlider/runnofkutch.png' },
-    { title: 'Statue Of Unity', img: A + 'img/GlimpsesSlider/statueofunity.png' },
-    { title: 'Kite Festival', img: A + 'img/GlimpsesSlider/kitefestival.png' },
-    { title: 'Vibrant Gujarat', img: A + 'img/GlimpsesSlider/vibrant.png' },
+    { title: 'Great Ran Of Kutch', img: A + 'img/GlimpsesSlider/rann-of-kutch-new.jpg' }, // Unsplash License: photo-1669015881702
+    { title: 'Statue Of Unity', img: A + 'img/GlimpsesSlider/statue-of-unity-new.jpg' }, // Unsplash License: photo-1782848775396
+    { title: 'Kite Festival', img: A + 'img/GlimpsesSlider/kite-festival-new.jpg' }, // Unsplash License: photo-1558641930
+    { title: 'Vibrant Gujarat', img: A + 'img/GlimpsesSlider/vibrant-gujarat-new.jpg' }, // Unsplash License: photo-1790030838058
   ];
 
   partners = [

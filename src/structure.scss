@@ -149,12 +149,5 @@ html:root { --p-section-y: clamp(44px, 5vw, 72px); }
 :root .section.atlas { padding-bottom: clamp(28px, 3vw, 44px); }
 :root .figures { padding-top: 0; }
 
-/* header Login / Register: flat solid button (no gradient, glow, pill or hover lift) */
-:root .site-header .p-button.login-btn:not(:disabled) {
-  background: var(--brand) !important; border: 1px solid var(--brand); border-radius: 6px; box-shadow: none !important; filter: none !important;
-  height: 38px; padding: 0 16px; gap: 8px; font-weight: 600; font-size: 0.9rem; letter-spacing: 0;
-  .pi { font-size: 0.9rem; }
-  &:hover { background: color-mix(in srgb, var(--brand) 86%, #000) !important; border-color: color-mix(in srgb, var(--brand) 86%, #000); transform: none; }
-  &:active { transform: none; }
-  &:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-}
+/* header Login / Register: compact size (colour and shape come from buttons.scss) */
+:root .site-header .p-button.login-btn { height: 38px; padding: 0 16px; gap: 8px; font-size: 0.9rem; .pi { font-size: 0.9rem; } }

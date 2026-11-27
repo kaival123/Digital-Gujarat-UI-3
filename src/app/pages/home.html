@@ -18,7 +18,7 @@
                 <p class="lead">{{ s.sub }}</p>
                 <div class="hero-cta">
                   <a pButton size="large" href="#services" (click)="scrollTo($event)">Explore services <i class="pi pi-arrow-right"></i></a>
-                  <a pButton size="large" variant="outlined" routerLink="/videos"><i class="pi pi-play-circle"></i> How it works</a>
+                  <a pButton size="large" [outlined]="true" routerLink="/videos"><i class="pi pi-play-circle"></i> How it works</a>
                 </div>
                 <dl class="hero-facts">
                   @for (f of facts; track f.label) {
@@ -118,7 +118,7 @@
             </button>
           }
         </div>
-        <a pButton variant="outlined" routerLink="/services/citizen">View all services <i class="pi pi-arrow-right"></i></a>
+        <a pButton [outlined]="true" routerLink="/services/citizen">View all services <i class="pi pi-arrow-right"></i></a>
       </aside>
 
       <div class="atlas-panel" role="tabpanel" appReveal="right">
@@ -172,7 +172,7 @@
         <p-tag value="Popular Services" severity="contrast" [rounded]="true" />
         <h2>Popular <span class="accent">Digital Gujarat</span> Services</h2>
         <p>The most requested citizen services — apply online in a few minutes.</p>
-        <a pButton variant="outlined" routerLink="/services/citizen">View all services <i class="pi pi-arrow-right"></i></a>
+        <a pButton [outlined]="true" routerLink="/services/citizen">View all services <i class="pi pi-arrow-right"></i></a>
       </div>
       <div class="trend-rail" appReveal="right">
         <p-carousel [value]="trending" [numVisible]="2" [numScroll]="1" [circular]="false" [responsiveOptions]="[
@@ -248,7 +248,7 @@
           <p-tag value="FAQs" severity="contrast" [rounded]="true" />
           <h2>Frequently Asked <span class="accent">Questions (FAQs)</span></h2>
         </div>
-        <a pButton variant="outlined" routerLink="/faq">View all FAQs <i class="pi pi-arrow-right"></i></a>
+        <a pButton [outlined]="true" routerLink="/faq">View all FAQs <i class="pi pi-arrow-right"></i></a>
       </div>
       <div class="faq-split">
         <p-accordion [value]="0" appReveal="left">
@@ -264,7 +264,7 @@
           <h3>Your Feedback Matters</h3>
           <p>Help us improve Digital Gujarat.</p>
           <a pButton routerLink="/feedback">Give Feedback <i class="pi pi-arrow-right"></i></a>
-          <a pButton variant="outlined" class="on-dark hc-alt" routerLink="/help-desk"><i class="pi pi-flag"></i> Report a Problem</a>
+          <a pButton [outlined]="true" class="on-dark hc-alt" routerLink="/help-desk"><i class="pi pi-flag"></i> Report a Problem</a>
         </aside>
       </div>
     </div>
@@ -354,7 +354,7 @@
       <p>Access government services on the go, anytime and anywhere.</p>
       <div class="cta-actions">
         <a pButton size="large" href="https://play.google.com/store/search?q=Digital%20Gujarat&c=apps" target="_blank" rel="noopener"><i class="pi pi-android"></i> Google Play</a>
-        <a pButton size="large" class="on-dark" variant="outlined" href="https://apps.apple.com/in/search?term=Digital%20Gujarat" target="_blank" rel="noopener"><i class="pi pi-apple"></i> App Store</a>
+        <a pButton size="large" class="on-dark" [outlined]="true" href="https://apps.apple.com/in/search?term=Digital%20Gujarat" target="_blank" rel="noopener"><i class="pi pi-apple"></i> App Store</a>
       </div>
     </div>
   </section>

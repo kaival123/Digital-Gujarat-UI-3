@@ -1,0 +1,57 @@
+/* =====================================================================================================
+   Button system — one flat, solid style for every button in the project.
+   Loaded LAST (see styles.scss) so it settles the earlier layered rules (anim, premium, official, page
+   sheets) that added gradients, glows, pill shapes, hover lifts and shimmer sweeps.
+   - shape: 6px corners, 600 weight, no letter-spacing tricks
+   - fill: one solid colour (brand; saffron on dark panels; the scholarship theme keeps its own colour)
+   - states: hover darkens the fill, press does nothing fancy, keyboard focus shows a clear outline
+   ===================================================================================================== */
+
+$hover: color-mix(in srgb, var(--brand) 86%, #000);
+$saffron: #ff9933;
+$saffron-hover: #f08a1f;
+$primary: ':not(.p-button-outlined):not(.p-button-text):not(.p-button-link):not(.p-button-secondary):not(.p-button-icon-only):not(:disabled)';
+
+/* ---- shape + states, every button ---- */
+:root :is(.p-button, a[pButton], button[pButton], .cl-btn, .cs-btn, .dz-btn, .sd-act):not(.p-scrolltop) {
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  filter: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 600;
+  background-image: none;
+  &:hover, &:active { transform: none !important; box-shadow: none !important; filter: none !important; }
+  &:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; box-shadow: none !important; }
+}
+/* the light sweep that ran across the citizen-login buttons */
+:root .cl-btn::after { display: none !important; }
+
+/* ---- primary: solid brand ---- */
+:root .p-button#{$primary} {
+  background: var(--brand) !important; border-color: var(--brand) !important; color: #fff !important;
+  &:hover { background: $hover !important; border-color: $hover !important; }
+}
+
+/* ---- primary on dark panels and in dark mode: solid saffron (the official accent) ---- */
+:root :is(.promo, .help-card, .site-footer .footer-cta) .p-button#{$primary},
+:root .consent-dlg .p-button.consent-close,
+:root.app-dark :is(.section, .cta-band) .p-button#{$primary} {
+  background: $saffron !important; border-color: $saffron !important; color: #1b1200 !important;
+  &:hover { background: $saffron-hover !important; border-color: $saffron-hover !important; }
+}
+
+/* ---- scholarship pages keep their own theme colour, just flat ---- */
+:root :is(app-scholarships, app-scholarship-detail) .p-button#{$primary} {
+  background: var(--sb) !important; border-color: var(--sb) !important; color: #fff !important;
+  &:hover { background: var(--ss) !important; border-color: var(--ss) !important; }
+}
+
+/* ---- custom (non-PrimeNG) primary buttons ---- */
+:root :is(.cl-btn-main, .cs-btn-main, .sd-act-main) {
+  background: var(--brand) !important; border-color: var(--brand) !important; color: #fff !important;
+  &:hover:not(:disabled) { background: $hover !important; border-color: $hover !important; }
+}
+:root .cl-btn-gold {
+  background: $saffron !important; border-color: $saffron !important; color: #1b1200 !important;
+  &:hover:not(:disabled) { background: $saffron-hover !important; border-color: $saffron-hover !important; }
+}

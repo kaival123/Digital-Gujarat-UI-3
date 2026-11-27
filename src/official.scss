@@ -317,6 +317,12 @@
 :root .site-header .header-inner > * { transition: gap 0.8s var(--nav-ease), margin 0.8s var(--nav-ease); }
 @media (prefers-reduced-motion: reduce) { :root .site-header .header-inner, :root .site-header .header-inner > * { transition: none; will-change: auto; } }
 
+/* navigation bar: always full width and square (no floating pill), at rest and while scrolling */
+:root .site-header .header-inner {
+  width: 100%; max-width: 100%; border-radius: 0; padding: 8px clamp(12px, 2.4vw, 32px);
+  border-width: 0 0 1px; border-color: var(--dg-border); box-shadow: 0 4px 16px rgba(20, 33, 61, 0.12);
+}
+
 /* outlined buttons on the dark promo band keep white text on hover */
 :root .promo .p-button.p-button-outlined:hover, :root .promo .p-button.p-button-outlined:focus-visible, :root .promo .on-dark:hover,
 :root.app-dark .promo .p-button.p-button-outlined:hover, :root.app-dark .promo .on-dark:hover { color: #fff; border-color: #fff; background: rgba(255, 255, 255, 0.14); }

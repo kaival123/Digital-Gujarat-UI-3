@@ -8,9 +8,9 @@
 :root {
   --p-serif: 'Noto Sans', 'Noto Sans Gujarati', 'Segoe UI', system-ui, sans-serif; --p-font: 'Noto Sans', 'Noto Sans Gujarati', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --p-bg: #f4f6fa; --p-bg-2: #e9eef5; --p-surface: #ffffff;
-  --p-ink: #101828; --p-muted: #4c4c4c; /* Figma text colours */ --p-line: #d5dce8; --p-line-2: #e4e9f1;
-  --p-gold: color-mix(in srgb, var(--brand) 82%, #000); --p-gold-2: var(--brand-2); --p-gold-soft: color-mix(in srgb, var(--brand) 10%, #fff);
-  --p-navy: color-mix(in srgb, var(--ink), #000 25%); --p-navy-2: var(--ink); /* theme surface (Teal Saffron = teal) */
+  --p-ink: #14213d; --p-muted: #4d5b73; --p-line: #d5dce8; --p-line-2: #e4e9f1;
+  --p-gold: #b45309; --p-gold-2: #ff9933; --p-gold-soft: #fff3e2;
+  --p-navy: color-mix(in srgb, var(--brand) 62%, #000); --p-navy-2: var(--brand);
   --p-r: 8px; --p-r-lg: 10px; --p-r-xl: 12px;
   --p-sh-1: 0 1px 2px rgba(20, 33, 61, 0.08);
   --p-sh-2: 0 2px 10px rgba(20, 33, 61, 0.12);
@@ -18,10 +18,10 @@
   --p-section-y: clamp(64px, 8vw, 112px);
 }
 :root.app-dark {
-  --p-bg: var(--dk-bg); --p-bg-2: var(--dk-alt); --p-surface: var(--dk-card);
-  --p-ink: var(--dk-text); --p-muted: var(--dk-muted); --p-line: var(--dk-line); --p-line-2: var(--dk-chip);
-  --p-gold: color-mix(in srgb, var(--brand-2), #fff 25%); --p-gold-2: var(--brand-2); --p-gold-soft: rgba(var(--brand-rgb), 0.14);
-  --p-navy: var(--srf-deep); --p-navy-2: color-mix(in srgb, var(--ink), #fff 15%);
+  --p-bg: #0a111e; --p-bg-2: #0e1829; --p-surface: #131f33;
+  --p-ink: #eaf0fb; --p-muted: #a0afc8; --p-line: #26354f; --p-line-2: #1b2940;
+  --p-gold: #ffb066; --p-gold-2: #ff9933; --p-gold-soft: rgba(255, 153, 51, 0.12);
+  --p-navy: #060d19; --p-navy-2: color-mix(in srgb, var(--brand) 78%, #fff);
   --p-sh-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 28px -14px rgba(0, 0, 0, 0.6);
   --p-sh-2: 0 2px 4px rgba(0, 0, 0, 0.4), 0 28px 56px -24px rgba(0, 0, 0, 0.8);
 }

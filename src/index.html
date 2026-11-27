@@ -10,25 +10,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Noto+Sans+Gujarati:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-  <script>
-    /* Apply the visitor's saved colour theme before first paint, so the loader and page don't flash the default
-       teal. Same main/ink pairs as App.themes in app.ts (that list stays the source of truth once the app runs). */
-    (function () {
-      var T = { navy: ['#1e40af', '#0b2a66'], jade: ['#0f766e', '#073f3b'], indigo: ['#4f46e5', '#272270'], sky: ['#0284c7', '#0b3a5c'],
-        emerald: ['#059669', '#064e3b'], rose: ['#e11d48', '#5c0d24'], amber: ['#d97706', '#5a2a06'], tricolour: ['#06038d', '#0b1f5c'],
-        saffron: ['#d97706', '#084d50'], 'saffron-plain': ['#d4570b', '#3b1a06'], indiagreen: ['#138808', '#0d3f0a'], chakra: ['#06038d', '#0b0a52'] };
-      var k; try { k = localStorage.getItem('dg-theme-v3'); } catch (e) {}
-      var t = T[k] || T.saffron, s = document.documentElement.style;
-      var rgb = function (h) { var n = parseInt(h.slice(1), 16); return (n >> 16 & 255) + ', ' + (n >> 8 & 255) + ', ' + (n & 255); };
-      s.setProperty('--brand', t[0]); s.setProperty('--brand-rgb', rgb(t[0]));
-      s.setProperty('--ink', t[1]); s.setProperty('--ink-rgb', rgb(t[1]));
-    })();
-  </script>
   <style>
     /* first-paint loader: inline so it shows instantly, before the app bundle arrives (important on slow 4G).
        Progress is driven by main.ts through the --al-p custom property (0–1). */
     #app-loader { position: fixed; inset: 0; z-index: 99999; display: grid; place-items: center; color: #fff; font-family: 'Inter', system-ui, sans-serif;
-      background: radial-gradient(70% 60% at 85% 0%, color-mix(in srgb, color-mix(in srgb, var(--ink, #084d50), #fff 30%) 55%, transparent), transparent 60%), radial-gradient(60% 60% at 0% 100%, rgba(var(--brand-rgb, 217, 119, 6), 0.28), transparent 60%), var(--ink, #084d50);
+      background: radial-gradient(70% 60% at 85% 0%, rgba(30, 64, 175, 0.6), transparent 60%), radial-gradient(60% 60% at 0% 100%, rgba(37, 99, 235, 0.35), transparent 60%), #0a1730;
       transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.7s; will-change: opacity; contain: strict; --al-p: 0.06; }
     #app-loader.al-hide { opacity: 0; visibility: hidden; pointer-events: none; }
     #app-loader .al-box { transition: opacity 0.45s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); display: grid; justify-items: center; gap: 22px; padding: 24px; text-align: center; }
@@ -40,7 +26,7 @@
     #app-loader .al-logos img { height: 52px; width: auto; display: block; }
     #app-loader .al-text { margin: 0; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.03em; color: rgba(255, 255, 255, 0.78); }
     #app-loader .al-bar { position: relative; width: min(260px, 66vw); height: 5px; border-radius: 5px; background: rgba(255, 255, 255, 0.14); overflow: hidden; }
-    #app-loader .al-bar i { position: absolute; inset: 0; border-radius: 5px; background: linear-gradient(90deg, color-mix(in srgb, var(--ink, #084d50), #fff 62%), var(--brand, #d97706)); transform-origin: 0 50%; transform: scaleX(var(--al-p)); transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+    #app-loader .al-bar i { position: absolute; inset: 0; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #2563eb 60%, #f59e0b); transform-origin: 0 50%; transform: scaleX(var(--al-p)); transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
     #app-loader .al-bar i::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.55), transparent 70%); transform: translateX(-100%); animation: alShine 1.4s ease-in-out infinite; }
     #app-loader .al-noscript { margin: 0; padding: 12px 16px; border-radius: 10px; background: #fff; color: #0f1b2d; font-weight: 700; }
     @keyframes alShine { to { transform: translateX(100%); } }

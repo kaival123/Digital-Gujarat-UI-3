@@ -186,14 +186,14 @@
   .p-datepicker-day { width: 2.4rem; height: 2.4rem; margin: 0 auto; border-radius: 50%; font: 600 0.9rem var(--p-font); display: inline-flex; align-items: center; justify-content: center; color: var(--p-ink); }
   .p-datepicker-day:hover { background: color-mix(in srgb, var(--brand) 10%, transparent); }
   .p-datepicker-other-month .p-datepicker-day, .p-datepicker-day-cell.p-datepicker-other-month { color: var(--p-muted); opacity: 0.55; }
-  tr > .p-datepicker-day-cell:first-child .p-datepicker-day { color: var(--brand); } /* Sunday = weekly off */
+  tr > .p-datepicker-day-cell:first-child .p-datepicker-day { color: #c2410c; } /* Sunday = weekly off */
   .p-datepicker-today > .p-datepicker-day { box-shadow: inset 0 0 0 2px #ff9933; background: transparent; color: var(--p-ink); }
   .p-datepicker-day-selected, .p-datepicker-day.p-datepicker-day-selected { background: var(--brand) !important; color: #fff !important; box-shadow: none; } }
 :root .hol-today { order: 1; display: grid; align-content: start; gap: 0; padding: clamp(20px, 2.6vw, 32px); border-radius: 10px; color: var(--p-ink); background: var(--p-surface); border: 1px solid var(--p-line); border-top: 4px solid var(--brand); box-shadow: var(--p-sh-1);
   .ht-label { margin: 0 0 14px; font: 700 0.78rem/1 var(--p-font); letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand); }
   .ht-day { margin: 0; display: inline-grid; place-items: center; width: 84px; height: 84px; border-radius: 8px; background: var(--brand); color: #fff; font: 800 2.6rem/1 var(--p-font); grid-row: span 3; margin-right: 18px; }
   .ht-week { margin: 0; font: 700 1.35rem/1.2 var(--p-font); align-self: end; } .ht-month { margin: 2px 0 0; color: var(--p-muted); font-size: 1rem; align-self: start; }
-  .legend { display: grid; gap: 10px; margin: 22px 0 20px; padding: 16px 0 0; border-top: 1px solid var(--p-line); span { display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; color: var(--p-ink); font-weight: 600; } .dot { width: 12px; height: 12px; border-radius: 50%; } .public { background: #ff9933; } .weekly { background: #d97706; } }
+  .legend { display: grid; gap: 10px; margin: 22px 0 20px; padding: 16px 0 0; border-top: 1px solid var(--p-line); span { display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; color: var(--p-ink); font-weight: 600; } .dot { width: 12px; height: 12px; border-radius: 50%; } .public { background: #ff9933; } .weekly { background: #c2410c; } }
   .p-button { justify-self: start; } }
 :root .hol-today { grid-template-columns: auto 1fr; .ht-label, .legend, .p-button { grid-column: 1 / -1; } }
 @media (max-width: 800px) { :root .hol-grid { grid-template-columns: 1fr; } }
@@ -256,10 +256,10 @@
 }
 :root.app-dark .sl-cats a.on, :root.app-dark .policy-rail a.on { color: #fff; }
 :root.app-dark .hol-cal .p-datepicker-header :is(.p-datepicker-title, button, .p-icon, svg) { color: #fff; }
-:root.app-dark .hol-cal tr > .p-datepicker-day-cell:first-child .p-datepicker-day { color: var(--brand-2); }
+:root.app-dark .hol-cal tr > .p-datepicker-day-cell:first-child .p-datepicker-day { color: #fb923c; }
 :root.app-dark .hol-cal .p-datepicker-day { color: var(--p-ink); }
 :root.app-dark .hol-cal .p-datepicker-day-selected { color: #fff; }
-:root.app-dark .hol-today .legend .weekly { background: var(--brand-2); }
+:root.app-dark .hol-today .legend .weekly { background: #fb923c; }
 :root.app-dark .atlas-tab.on { background: var(--p-surface); }
 /* line-art service icons are dark PNGs: give them a light tile so they stay visible */
 :root.app-dark :is(.atlas-list img, .ex-card img, .svc-card img, .tc-icon, .promo-card img) { background: #e9eefb; }

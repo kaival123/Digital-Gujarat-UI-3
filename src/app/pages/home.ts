@@ -1,142 +1,160 @@
 import { afterNextRender, Component, computed, effect, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
+import { Counter, Reveal } from '../shared/motion';
+import { GlimpseSlider } from '../shared/glimpse-slider';
+import { SearchService } from '../shared/search.service';
+import citizenData from '../data/citizen.json';
+import sugamData from '../data/sugam.json';
+import dssData from '../data/dss.json';
+import jansevaData from '../data/janseva.json';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { SearchService } from '../shared/search.service';
+import { ButtonDirective } from 'primeng/button';
+import { Carousel } from 'primeng/carousel';
+import { DatePicker } from 'primeng/datepicker';
+import { Image } from 'primeng/image';
+import { Tag } from 'primeng/tag';
+import { Tooltip } from 'primeng/tooltip';
 import { A, SITE } from '../shared/site';
 import { A11yService } from '../shared/a11y.service';
-
-/** Design assets exported from the Figma home page (node 213:1958). */
-const H = A + 'img/home/';
-
-type MediaKind = 'photo' | 'video';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-home',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, ButtonDirective, Carousel, DatePicker, Image, Tag, Tooltip, Reveal, Counter, GlimpseSlider, Accordion, AccordionPanel, AccordionHeader, AccordionContent],
   templateUrl: './home.html',
 })
 export class HomePage {
   readonly site = SITE;
-  readonly h = H;
   searchSvc = inject(SearchService);
-  a11y = inject(A11yService);
+
+  private pick = (items: { title: string; img: string }[], n = 8) => items.slice(0, n).map((i) => ({ title: i.title, img: A + 'site/' + encodeURI(i.img) }));
+
+  explorer = [
+    { key: 'citizen', label: 'Citizen', icon: 'pi pi-users', route: '/services/citizen', total: citizenData.length, items: this.pick(citizenData), blurb: 'Certificates, passes and everyday documents.' },
+    { key: 'sugam', label: 'Sugam', icon: 'pi pi-bolt', route: '/sugam-digital-gujarat', total: sugamData.length, items: this.pick(sugamData), blurb: 'Caste, income and ration card services — fully online.' },
+    { key: 'dss', label: 'Digital SevaSetu', icon: 'pi pi-briefcase', route: '/services/digital-sevasetu', total: dssData.length, items: this.pick(dssData), blurb: 'Department schemes and subsidies.' },
+    { key: 'janseva', label: 'Janseva', icon: 'pi pi-building', route: '/services/janseva', total: jansevaData.length, items: this.pick(jansevaData), blurb: 'Affidavits and services from Janseva Kendras.' },
+  ];
+
+  faqs = [
+    { q: 'How can I apply for an Income Certificate online?', a: ["Log in with Citizen Login, search for 'Income Certificate', fill in the application form, upload the required documents and submit. You can track the status under 'My Applications'."] },
+    { q: 'What documents are required for a Domicile Certificate?', a: ['Proof of identity, proof of residence in Gujarat (such as a ration card, electricity bill or property document) and a birth certificate or school leaving certificate are generally required.'] },
+    { q: 'How can I track the status of my application?', a: ["After logging in, open 'My Applications' to see the real-time status of every application and download the certificate once it is approved."] },
+    { q: 'Is registration mandatory to apply for services?', a: ['Yes. A one-time registration through Citizen Login is required so that your applications, documents and certificates are linked to your account.'] },
+  ];
+  cat = signal('citizen');
+  catData = computed(() => this.explorer.find((c) => c.key === this.cat()) ?? this.explorer[0]);
+
+  facts = [
+    { value: 'Apply Online', label: 'from Anywhere' },
+    { value: 'Track Application', label: 'in Real-time' },
+    { value: 'Get Certificates', label: 'Digitally' },
+  ];
+
+  /* Browse Services by Department */
+  quick = [
+    { icon: 'pi pi-building', label: 'Revenue', sub: 'Land, property, certificates', route: '/services/citizen' },
+    { icon: 'pi pi-book', label: 'Education', sub: 'Scholarships, admissions', route: '/scholarships' },
+    { icon: 'pi pi-shopping-cart', label: 'Food & Civil Supplies', sub: 'Ration card, NFSA, PDS', route: '/sugam-digital-gujarat' },
+    { icon: 'pi pi-sun', label: 'Agriculture', sub: 'Farmer schemes, subsidies', route: '/services/digital-sevasetu' },
+    { icon: 'pi pi-heart', label: 'Health & Family Welfare', sub: 'Health schemes, registration', route: '/services/digital-sevasetu' },
+    { icon: 'pi pi-users', label: 'Social Justice', sub: 'Welfare for SC/ST/OBC', route: '/services/digital-sevasetu' },
+    { icon: 'pi pi-briefcase', label: 'Labour & Employment', sub: 'Labour services, registrations', route: '/services/digital-sevasetu' },
+    { icon: 'pi pi-user', label: 'Women & Child', sub: 'Empowerment schemes', route: '/services/digital-sevasetu' },
+    { icon: 'pi pi-home', label: 'Urban Development', sub: 'Municipal services, permissions', route: '/services/linked' },
+    { icon: 'pi pi-th-large', label: 'More Departments', sub: 'Explore all departments', route: '/services/citizen' },
+  ];
+
+  /* Key Online Services */
+  keyServices = ['Birth Certificate', 'Death Certificate', 'Income Certificate', 'Domicile Certificate', 'Caste Certificate'];
+
+  /* Highlights */
+  ticker = [
+    'Applications for Post Matric Scholarship are now open.',
+    'Digital Gujarat – Enhanced citizen experience with new services.',
+    'Income Certificate service has been updated with faster approval.',
+  ];
+
+  /* Our Impact */
+  stats = [
+    { icon: 'pi pi-th-large', value: 500, decimals: 0, suffix: '+', label: 'Government Services' },
+    { icon: 'pi pi-file-edit', value: 5.2, decimals: 1, suffix: ' Cr+', label: 'Applications Processed' },
+    { icon: 'pi pi-verified', value: 4.8, decimals: 1, suffix: ' Cr+', label: 'Certificates Issued' },
+    { icon: 'pi pi-map-marker', value: 100, decimals: 0, suffix: '%', label: 'District Coverage' },
+  ];
+
+  /* Success Stories */
+  story = { quote: 'I got my Income Certificate online in just 2 days. The process was simple and completely paperless.', name: 'Kinjal Patel', place: 'Ahmedabad' };
+
+  /* How It Works */
+  steps = [
+    { icon: 'pi pi-search', title: 'Search Service', text: 'Find the service you need.' },
+    { icon: 'pi pi-pen-to-square', title: 'Apply Online', text: 'Fill the application form.' },
+    { icon: 'pi pi-upload', title: 'Upload Documents', text: 'Submit required documents.' },
+    { icon: 'pi pi-download', title: 'Track & Download', text: 'Check status and download certificate.' },
+  ];
 
   openSearch(q = '') { this.searchSvc.show(q); }
-  heroQuery = '';
-  heroSearch(e: Event) { e.preventDefault(); this.openSearch(this.heroQuery.trim()); }
+  query = '';
+  calendarDate: Date = new Date();
+  today = (() => {
+    const d = new Date();
+    return { day: d.getDate(), weekday: d.toLocaleDateString('en-IN', { weekday: 'long' }), month: d.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' }) };
+  })();
 
-  /* ---- banner slides: arched photo + two badges on the left, headline + search on the right ---- */
   slides = [
     {
-      kicker: 'Service that work around you',
-      title: 'Your Gujarat.', title2: 'One digital doorway.',
-      sub: 'Discover government services, apply online, and track every request—simply, securely, and in your language.',
-      img: H + 'hero-somnath.png', alt: 'Somnath Temple at sunset', pos: '50% 40%',
-      /* Figma frames this photo at 1045×697 inside the 468×466 arch, offset (-55, -65) */
-      crop: { w: '223.29%', h: '149.57%', l: '-11.75%', t: '-13.95%' } as { w: string; h: string; l: string; t: string } | null,
-      badgeTop: { b: 'Safe & Secure', small: 'Verified Government Portal' },
-      badgeBottom: { b: '2.4 Cr +', small: 'Application processed' },
+      title: 'One Platform for', accent: 'Citizen Services', rest: 'of Gujarat',
+      sub: 'Apply online from anywhere, track your application in real-time and get certificates digitally.',
+      img: A + 'img/slider/hero-citizen-tablet.jpg', shape: 'rounded', /* Unsplash License: photo-1656236607879 */
+      cards: [
+        { icon: 'pi pi-book', b: 'Students', small: 'Scholarships' },
+        { icon: 'pi pi-sun', b: 'Farmers', small: 'Agri support' },
+        { icon: 'pi pi-heart', b: 'Women', small: 'Welfare schemes' },
+      ],
     },
     {
-      kicker: 'Service that work around you',
-      title: 'Viksit Gujarat.', title2: 'Digital by default.',
-      sub: 'Certificates, scholarships and welfare schemes for every citizen—apply from anywhere and get them delivered digitally.',
-      img: A + 'img/slider/hero-statue-of-unity.jpg', alt: 'Statue of Unity', pos: '50% 30%', crop: null, /* Unsplash License: photo-1631983097767 */
-      badgeTop: { b: 'Safe & Secure', small: 'Verified Government Portal' },
-      badgeBottom: { b: '800 +', small: 'Services online' },
+      title: 'Viksit Gujarat', accent: 'through Digital Services', rest: '',
+      sub: 'Citizen-centric services for all sections of society — students, farmers and women.',
+      img: A + 'img/slider/hero-statue-of-unity.jpg', shape: 'circle', /* Unsplash License: photo-1631983097767 */
+      cards: [
+        { icon: 'pi pi-eye', b: 'Transparent', small: 'Governance' },
+        { icon: 'pi pi-users', b: 'Citizen', small: 'Empowerment' },
+        { icon: 'pi pi-globe', b: 'Digital', small: 'Inclusiveness' },
+      ],
     },
   ];
-  popularSearches = ['Income Certificate', 'Scholarship', 'Farmer Assitance'];
 
-  /* ---- What's new ticker ---- */
-  ticker = [
-    'DigiLocker integration now live — link your documents to your SPID profile',
-    'RFP issued for Unified Registry Citizens Mobile App — submissions open',
+  services = [
+    { title: 'Citizen Services', icon: A + 'img/icon/citizenservice.svg', route: '/services/citizen' },
+    { title: 'Digital SevaSetu Services', icon: A + 'img/icon/digitalsevasetu.svg', route: '/services/digital-sevasetu' },
+    { title: 'Janseva Services', icon: A + 'img/icon/jansevaservice.svg', route: '/services/janseva' },
+    { title: 'Scholarship Services', icon: A + 'img/icon/scholarship.svg', url: 'https://gssp.gujarat.gov.in/' },
+    { title: 'Linked Services', icon: A + 'img/icon/eolservice.svg', route: '/services/linked' },
   ];
 
-  /* ---- Popular Digital Gujarat Services ---- */
-  popular = [
-    { title: 'Income Certificate', icon: H + 'pop-1.svg' },
-    { title: 'Addition of name in ration card', icon: H + 'pop-2.svg' },
-    { title: 'Widow Certificate', icon: H + 'pop-3.svg' },
-    { title: 'Domicile Certificate by Birth', icon: H + 'pop-4.svg' },
-    { title: 'Senior Citizen Certificate', icon: H + 'pop-5.svg' },
-    { title: 'Farmer Certificate', icon: H + 'pop-6.svg' },
+  /* Popular Services */
+  trending = [
+    { rank: '01', title: 'Income Certificate', desc: 'Apply for Income Certificate online.', img: A + 'citizen/Income.png' },
+    { rank: '02', title: 'Domicile Certificate', desc: 'Apply for Domicile Certificate (Resident Certificate).', img: A + 'citizen/Domicile.png' },
+    { rank: '03', title: 'Caste Certificate', desc: 'Apply for Caste Certificate (SC / ST / SEBC / OBC).', img: A + 'site/images/JansevaService/caste_certificate.png' },
+    { rank: '04', title: 'Scholarship Application', desc: 'Apply for various scholarship schemes of Gujarat.', img: A + 'site/images/JansevaService/scholarship.png' },
   ];
 
-  /* ---- The numbers behind Gujarat's welfare revolution ---- */
-  numbers = [
-    { icon: H + 'stat-1.svg', value: '45 Cr+', label: 'Citizens covered', tag: 'Registered beneficiaries' },
-    { icon: H + 'stat-2.svg', value: '40+', label: 'Departments integrated', tag: 'Data sources connected' },
-    { icon: H + 'stat-3.svg', value: '50+', label: 'Welfare schemes', tag: 'Schemes onboarded' },
-    { icon: H + 'stat-4.svg', value: '800 +', label: 'Services', tag: 'Service Onboarded' },
-    { icon: H + 'stat-5.svg', value: '₹1,200 Cr+', label: 'Benefits Disbursed', tag: 'Across all schemes' },
-    { icon: H + 'stat-6.svg', value: '32 L+', label: 'Grievances Resolved', tag: 'Citizen Helped' },
+  /* Featured Schemes */
+  perks = [
+    { icon: 'pi pi-book', text: 'મુખ્યમંત્રી શિક્ષણ સહાય યોજના — Mukhyamantri Shikshan Sahay Yojana' },
+    { icon: 'pi pi-sun', text: 'મુખ્યમંત્રી કૃષિ સહાય યોજના — Mukhyamantri Krushi Sahay Yojana' },
+    { icon: 'pi pi-heart', text: 'મહિલા સશક્તિકરણ યોજના — Women Empowerment Schemes' },
+    { icon: 'pi pi-users', text: 'Services for everyone — students, farmers and women' },
   ];
 
-  /* ---- How does it work? ---- */
-  steps = [
-    { icon: H + 'step-1.svg', title: 'Visit Portal or App', text: 'Access Digital Gujarat via web or mobile app. Click “Get Your SPID”.' },
-    { icon: H + 'step-2.svg', title: 'Aadhaar e-KYC', text: 'Authenticate using your Aadhaar number and OTP. Your identity is verified against UIDAI in real time.' },
-    { icon: H + 'step-3.svg', title: 'Profile Review', text: 'Your Golden Record is automatically populated from existing government databases.' },
-    { icon: H + 'step-4.svg', title: 'Receive SPID', text: 'Your unique Social Protection ID (SPID) and Family ID are issued. Download or save your digital SPID card.' },
-    { icon: H + 'step-5.svg', title: 'Discover Schemes', text: 'The Eligibility Engine instantly shows all welfare schemes you qualify for. Apply with one click.' },
-    { icon: H + 'step-6.svg', title: 'Track Benefits', text: 'Monitor all benefits received and raise grievances if needed, all in one dashboard.' },
-  ];
 
-  /* ---- Digital Gujarat Services ---- */
-  dgServices: { title: string; icon: string; count: string; route?: string; url?: string; wide?: boolean }[] = [
-    { title: 'Citizen Services', icon: H + 'dgs-1.svg', count: '12 Schemes', route: '/services/citizen' },
-    { title: 'Digital SevaSetu Services', icon: H + 'dgs-2.svg', count: '12 Schemes', route: '/services/digital-sevasetu' },
-    { title: 'Janseva Services', icon: H + 'dgs-3.svg', count: '12 Schemes', route: '/services/janseva' },
-    { title: 'Scholarship Services', icon: H + 'dgs-4.svg', count: '12 Schemes', url: 'https://gssp.gujarat.gov.in/' },
-    { title: 'Linked Services', icon: H + 'dgs-5.svg', count: '12 Schemes', route: '/services/linked', wide: true },
-  ];
 
-  /* ---- Photo & Video Gallery ---- */
-  mediaFilter = signal<'all' | MediaKind>('all');
-  gallery: { title: string; img: string; kind: MediaKind }[] = [
-    { title: 'Adalaj Stepwell', img: H + 'gal-adalaj.png', kind: 'photo' },
-    { title: 'Statue of Unity', img: H + 'gal-unity.png', kind: 'photo' },
-    { title: 'Gir National Park', img: H + 'gal-gir.png', kind: 'video' },
-    { title: 'Rann of Kutch', img: H + 'gal-rann.png', kind: 'photo' },
-    { title: 'Somnath Temple', img: H + 'gal-somnath.png', kind: 'video' },
-    { title: 'Rani Ki Vav', img: H + 'gal-ranikivav.png', kind: 'photo' },
-  ];
-  galleryView = computed(() => { const f = this.mediaFilter(); return f === 'all' ? this.gallery : this.gallery.filter((g) => g.kind === f); });
-
-  /* ---- Latest Updates ---- */
-  updatesTab = signal<'news' | 'circular'>('news');
-  news = Array.from({ length: 4 }, () => ({
-    text: 'If you are unable to access scholarship services via Digital Gujarat, you can avail of them at https://gssp.gujarat.gov.in.',
-    date: '18 Apr 2026 04:00 PM', url: 'https://gssp.gujarat.gov.in/',
-  }));
-  circulars = Array.from({ length: 4 }, () => ({
-    text: 'Circular regarding online submission of applications for welfare schemes through Digital Gujarat portal.',
-    date: '18 Apr 2026 04:00 PM', url: SITE,
-  }));
-  updates = computed(() => (this.updatesTab() === 'news' ? this.news : this.circulars));
-  promoCards = [
-    { tone: 'green', icon: H + 'upd-1.svg', title: 'Government Services', text: 'Explore 50+ like Agriculture, Welfare, Education, Health and more.', route: '/services/citizen' },
-    { tone: 'orange', icon: H + 'upd-2.svg', title: 'Government Services', text: 'Browse live tenders, bids and empanelment notices from departments.', route: '/services/citizen' },
-  ];
-
-  /* ---- partner logos (marquee); crop values come from the Figma image fills ---- */
-  logos = [
-    { name: 'GIGW', img: H + 'logo-1.png', w: 180, h: 60, crop: { w: '116.81%', h: '189.33%', l: '-9.73%', t: '-21.33%' }, url: 'https://guidelines.india.gov.in/' },
-    { name: 'ITU WTSA New Delhi 2024', img: H + 'logo-2.png', w: 224, h: 70, url: 'https://www.delhiwtsa24.in/' },
-    { name: 'Gujarat State Portal', img: H + 'logo-3.png', w: 224, h: 70, crop: { w: '111.39%', h: '191.89%', l: '-5.91%', t: '-29.73%' }, url: 'https://gujaratindia.gov.in/' },
-    { name: 'India.gov.in', img: H + 'logo-4.png', w: 246, h: 70, crop: { w: '100%', h: '175.44%', l: '0', t: '-28.07%' }, url: 'https://india.gov.in/' },
-    { name: 'Gujarat Tourism', img: H + 'logo-5.png', w: 66, h: 70, crop: { w: '114.89%', h: '109.01%', l: '-8.44%', t: '-3.77%' }, url: 'https://www.gujarattourism.com/' },
-    { name: 'Statue of Unity', img: H + 'logo-6.png', w: 121, h: 70, crop: { w: '111.98%', h: '145.07%', l: '-5.15%', t: '-23.98%' }, url: 'https://www.soutickets.in/' },
-    { name: 'Swachh Bharat Mission', img: H + 'logo-7.png', w: 163, h: 70, crop: { w: '100%', h: '232.77%', l: '0', t: '-63.45%' }, url: 'https://swachhbharatmission.ddws.gov.in/' },
-    { name: 'SWAGAT', img: H + 'logo-8.png', w: 104, h: 100, crop: { w: '231.01%', h: '135.63%', l: '-63.57%', t: '-20.24%' }, url: 'https://swagat.gujarat.gov.in/' },
-    { name: 'GIGW 3.0', img: H + 'logo-9.svg', w: 266, h: 100, url: 'https://guidelines.india.gov.in/new-features-of-gigw-3-0/' },
-  ];
-
-  /* ---- hero: 3D glass-slab slider (unchanged behaviour). The slides are doubled into a ring of 4 so the wrap-around
-     always happens off-stage; copies are aria-hidden + inert, so assistive tech and Tab only ever see the real slides. ---- */
+  a11y = inject(A11yService);
+  /* ---- hero: 3D glass-slab slider. The slides are doubled into a ring of 4 so the wrap-around always happens
+     off-stage; copies are aria-hidden + inert, so assistive tech and Tab only ever see the real slides. ---- */
   readonly heroMs = 5000;
   heroRing = [...this.slides, ...this.slides];
   heroIdx = signal(0);
@@ -174,25 +192,19 @@ export class HomePage {
     obs.observe(el, { attributes: true, attributeFilter: ['class'] });
     go();
   });
-  /* Autoplay keeps running under the mouse. It pauses while a KEYBOARD user is inside (only :focus-visible counts) or
-     while someone is typing in the banner search box, and stays off when motion is turned off in the accessibility panel. */
+  /* Autoplay keeps running under the mouse: the banner fills the first screen, so pausing on hover meant it almost
+     never moved. It still pauses while a KEYBOARD user is inside (a mouse click on an arrow/dot also moves focus
+     inside, so only :focus-visible counts), and stays off when the user turns motion off in the accessibility panel. */
   private heroKbFocus = false;
   private heroSyncPause() { this.heroPaused.set(this.heroKbFocus); }
   heroEnter(_e: PointerEvent) {}
   heroLeave() { this.heroSwipe = false; }
-  heroFocusIn(e: FocusEvent) {
-    const t = e.target as Element | null;
-    this.heroKbFocus = (t?.matches?.(':focus-visible') ?? false) || t?.tagName === 'INPUT';
-    this.heroSyncPause();
-  }
+  heroFocusIn(e: FocusEvent) { this.heroKbFocus = (e.target as Element | null)?.matches?.(':focus-visible') ?? false; this.heroSyncPause(); }
   heroFocusOut(e: FocusEvent) {
     const next = e.relatedTarget as Node | null;
     if (!next || !(e.currentTarget as Element).contains(next)) { this.heroKbFocus = false; this.heroSyncPause(); }
   }
-  heroDown(e: PointerEvent) {
-    if ((e.target as Element | null)?.closest?.('input, button, a')) return; // let taps on the search box / chips through
-    this.heroX = e.clientX; this.heroSwipe = true;
-  }
+  heroDown(e: PointerEvent) { this.heroX = e.clientX; this.heroSwipe = true; }
   heroUp(e: PointerEvent) {
     if (!this.heroSwipe) return; // pointer went down outside the stage
     this.heroSwipe = false;
@@ -201,22 +213,51 @@ export class HomePage {
   }
   private heroSwipe = false;
   heroKey(e: KeyboardEvent) {
-    if ((e.target as Element | null)?.tagName === 'INPUT') return; // arrow keys move the caret in the search box
     if (e.key === 'ArrowRight') { this.heroGo(1); e.preventDefault(); }
     else if (e.key === 'ArrowLeft') { this.heroGo(-1); e.preventDefault(); }
   }
-
-  /* ---- gallery lightbox ---- */
   private lastFocus: HTMLElement | null = null;
+
   viewer = signal<{ title: string; img: string } | null>(null);
   zoom = signal(1);
   rot = signal(0);
   openViewer(g: { title: string; img: string }) {
     this.lastFocus = document.activeElement as HTMLElement | null;
     this.zoom.set(1); this.rot.set(0); this.viewer.set(g);
-    setTimeout(() => document.querySelector<HTMLElement>('.lightbox-tools button:last-child')?.focus(), 30);
+    setTimeout(() => document.querySelector<HTMLElement>(".lightbox-tools button:last-child")?.focus(), 30);
   }
   closeViewer() { this.viewer.set(null); this.lastFocus?.focus(); }
   zoomBy(d: number) { this.zoom.update((z) => Math.min(4, Math.max(0.3, +(z + d).toFixed(2)))); }
   rotateBy(d: number) { this.rot.update((r) => r + d); }
+
+  glimpses = [
+    { title: 'Great Ran Of Kutch', img: A + 'img/GlimpsesSlider/rann-of-kutch-new.jpg' }, // Unsplash License: photo-1669015881702
+    { title: 'Statue Of Unity', img: A + 'img/GlimpsesSlider/statue-of-unity-new.jpg' }, // Unsplash License: photo-1782848775396
+    { title: 'Kite Festival', img: A + 'img/GlimpsesSlider/kite-festival-new.jpg' }, // Unsplash License: photo-1558641930
+    { title: 'Vibrant Gujarat', img: A + 'img/GlimpsesSlider/vibrant-gujarat-new.jpg' }, // Unsplash License: photo-1790030838058
+  ];
+
+  partners = [
+    { name: 'ITU WTSA New Delhi 2024', img: A + 'img/partner/img1.png', url: 'https://www.delhiwtsa24.in/' },
+    { name: 'Gujarat India', img: A + 'img/partner/img2.png', url: 'https://gujaratindia.gov.in/index' },
+    { name: 'India.gov.in', img: A + 'img/partner/img3.png', url: 'https://india.gov.in/' },
+    { name: 'Gujarat Tourism', img: A + 'img/partner/img4.png', url: 'https://www.gujarattourism.com/' },
+    { name: 'Statue of Unity Tickets', img: A + 'img/partner/img5.png', url: 'https://www.soutickets.in/#/dashboard' },
+    { name: 'Swachh Bharat Mission', img: A + 'img/partner/img6.png', url: 'https://swachhbharatmission.ddws.gov.in/' },
+    { name: 'SWAGAT', img: A + 'img/partner/img7.png', url: 'https://swagat.gujarat.gov.in/' },
+    { name: 'GIGW 3.0', img: A + 'img/partner/img8.png', url: 'https://guidelines.india.gov.in/new-features-of-gigw-3-0/' },
+    { name: 'GIGW 3.0 Guidelines', img: A + 'img/partner/img9.png', url: 'https://guidelines.india.gov.in/new-features-of-gigw-3-0/' },
+  ];
+
+  partnersRev = this.partners.slice().reverse();
+
+  scrollTo(e: Event) {
+    e.preventDefault();
+    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  search() {
+    const q = this.query.trim();
+    window.open(SITE + 'AdvanceSearch.aspx' + (q ? '?q=' + encodeURIComponent(q) : ''), '_blank', 'noopener');
+  }
 }

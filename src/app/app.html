@@ -70,59 +70,46 @@
 <app-command-palette />
 
 <!-- Footer -->
-<footer class="dg-footer" [style.--fbg]="'url(' + fImg + 'footer-bg.png)'">
-  <div class="dg-f-wrap">
-    <div class="dg-f-top">
-      <div class="dg-f-brand">
-        <a class="dg-f-logo" routerLink="/" aria-label="Digital Gujarat 2.0 home"><img [src]="fImg + 'dg-logo.png'" alt="Digital Gujarat 2.0" width="148" height="60"></a>
-        <p>Gujarat's AI-powered unified social protection registry creating a single Golden Record for every citizen, enabling targeted, transparent welfare delivery.</p>
+<footer class="site-footer">
+  <div class="container footer-cta">
+    <div><p class="fc-kicker">Need help?</p><h3>Our helpdesk is open 10 AM – 6 PM, every day.</h3></div>
+    <a pButton routerLink="/help-desk">Contact helpdesk <i class="pi pi-arrow-right"></i></a>
+  </div>
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src="assets/img/logo/logodig.png" alt="Digital Gujarat" class="logo">
+      <p>Digital Gujarat is the single window for Government of Gujarat services to citizens, businesses and institutions.</p>
+      <div class="social">
+        @for (s of social; track s.label) {
+          <a [href]="s.url" target="_blank" rel="noopener" [attr.aria-label]="s.label"><i [class]="s.icon"></i></a>
+        }
       </div>
-      <div class="dg-f-meta">
-        <div class="dg-f-social">
-          @for (s of footerSocial; track s.label) {
-            <a [href]="s.url" target="_blank" rel="noopener" [attr.aria-label]="s.label" [class.glyph]="s.glyph"><img [src]="fImg + s.icon" alt="" [attr.width]="s.glyph ? 22 : 40" [attr.height]="s.glyph ? 15 : 40"></a>
-          }
-        </div>
-        <div class="dg-f-pills"><span>Visitors: 4,52,318</span><span>Last Updated : 12/04/2026 09:00:00</span></div>
-      </div>
+      <a href="https://dst.gujarat.gov.in/" target="_blank" rel="noopener"><img src="assets/citizen/logos/DSTlogo.png" alt="Department of Science &amp; Technology" class="dst"></a>
     </div>
-    <hr>
-    <div class="dg-f-links">
-      <nav aria-label="Quick links">
-        <h4>Quick Links</h4>
-        <div class="cols">
-          @for (col of footerQuick; track $index) {
-            <ul>
-              @for (l of col; track l.label) {
-                <li>@if (l.route) { <a [routerLink]="l.route"><img [src]="fImg + 'chev.svg'" alt="" width="6" height="11">{{ l.label }}</a> } @else { <a [href]="l.url" target="_blank" rel="noopener"><img [src]="fImg + 'chev.svg'" alt="" width="6" height="11">{{ l.label }}</a> }</li>
-              }
-            </ul>
-          }
-        </div>
-      </nav>
-      <nav aria-label="Important links">
-        <h4>Important Links</h4>
-        <div class="cols">
-          @for (col of footerImportant; track $index; let last = $last) {
-            <ul>
-              @for (l of col; track l.label) {
-                <li>@if (l.route) { <a [routerLink]="l.route"><img [src]="fImg + 'chev.svg'" alt="" width="6" height="11">{{ l.label }}</a> } @else { <a [href]="l.url" target="_blank" rel="noopener"><img [src]="fImg + 'chev.svg'" alt="" width="6" height="11">{{ l.label }}</a> }</li>
-              }
-              @if (last) { <li><a class="dg-f-btn" [href]="site + 'Download/GovernmentHolidays.pdf'" target="_blank" rel="noopener"><img [src]="fImg + 'ico-download.svg'" alt="" width="15" height="16"> Holiday List</a></li> }
-            </ul>
-          }
-        </div>
-      </nav>
-    </div>
-    <div class="dg-f-bottom">
-      <p>© Copyright {{ year }} Digital Gujarat All Rights Reserved.</p>
-      <div class="dg-f-manual">
-        <span>User Manual</span>
-        <div>
-          @for (m of manuals; track m) { <a class="dg-f-btn" routerLink="/user-manual" [attr.aria-label]="'User manual in ' + m"><img [src]="fImg + 'ico-download.svg'" alt="" width="15" height="16"> {{ m }}</a> }
-        </div>
-      </div>
-      <div class="dg-f-credit"><span>Design &amp; Develop By</span><img [src]="fImg + 'amnex.svg'" alt="Powered by AMNEX" width="123" height="40"></div>
+    <nav aria-label="Quick links">
+      <h4>Quick Links</h4>
+      <ul>
+        @for (l of quickLinks; track l.label) {
+          <li>@if (l.route) { <a [routerLink]="l.route">{{ l.label }}</a> } @else { <a [href]="l.url" target="_blank" rel="noopener">{{ l.label }}</a> }</li>
+        }
+      </ul>
+    </nav>
+    <nav aria-label="Important links">
+      <h4>Policies &amp; Help</h4>
+      <ul>
+        @for (l of importantLinks; track l.label) {
+          <li>@if (l.route) { <a [routerLink]="l.route">{{ l.label }}</a> } @else { <a [href]="l.url" target="_blank" rel="noopener">{{ l.label }}</a> }</li>
+        }
+      </ul>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <div class="container bottom-inner">
+      <span>© {{ year }} Digital Gujarat. All Rights Reserved.</span>
+      <span>Visitors: 486718029</span>
+      <span>Site best viewed in Chrome 72+ / Firefox 64+</span>
+      <span>Designed &amp; developed by <a href="https://guj.nic.in" target="_blank" rel="noopener">National Informatics Centre</a></span>
+      <img src="assets/img/logo/w3c.png" alt="W3C" class="w3c">
     </div>
   </div>
 </footer>

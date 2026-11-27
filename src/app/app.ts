@@ -33,46 +33,6 @@ export class App {
   readonly importantLinks = IMPORTANT_LINKS;
   readonly social = SOCIAL;
 
-  /* footer (Figma "Footer" 2053:372) */
-  readonly fImg = 'assets/img/home/';
-  readonly footerSocial = [
-    { label: 'Facebook', icon: 'soc-1.svg', url: SOCIAL[0].url },
-    { label: 'X (Twitter)', icon: 'soc-2.svg', url: 'https://x.com/' },
-    { label: 'Instagram', icon: 'soc-3.svg', url: SOCIAL[1].url },
-    { label: 'YouTube', icon: 'soc-4.svg', url: SOCIAL[2].url, glyph: true },
-    { label: 'Wikipedia', icon: 'soc-5.svg', url: 'https://www.wikipedia.org/' },
-    { label: 'LinkedIn', icon: 'soc-6.svg', url: 'https://www.linkedin.com/' },
-  ];
-  readonly footerQuick: { label: string; route?: string; url?: string }[][] = [
-    [
-      { label: 'Gujarat At A Glance', url: 'https://gujaratindia.gov.in/Home/GujaratAtAGlance' },
-      { label: 'Gujarat History', url: 'https://gujaratindia.gov.in/Index' },
-      { label: 'Greeting to Gujarat', url: 'https://gujaratindia.gov.in/Home/Getting-to-Gujarat' },
-      { label: 'FAQs', route: '/faq' },
-      { label: 'Sitemap', route: '/sitemap' },
-    ],
-    [
-      { label: 'Feedback', route: '/feedback' },
-      { label: 'Write to Grievance(Swagat)', url: 'https://swagat.gujarat.gov.in/' },
-      { label: 'Collectors', url: 'https://revenuedepartment.gujarat.gov.in/collectorate' },
-      { label: 'Gujarat Government Achievements', url: 'https://gujaratindia.gov.in/' },
-    ],
-  ];
-  readonly footerImportant: { label: string; route?: string; url?: string }[][] = [
-    [
-      { label: 'Terms & Conditions', route: '/terms-conditions' },
-      { label: 'Privacy Policy', route: '/privacy-policy' },
-      { label: 'Copyright Policy', route: '/copyright-policy' },
-      { label: 'Disclaimer & Policies', route: '/disclaimer' },
-      { label: 'Help', route: '/help-desk' },
-    ],
-    [
-      { label: 'Hyperlink Policy', route: '/hyperlinking-policy' },
-      { label: 'Accessibility Statement', route: '/accessibility-statement' },
-    ],
-  ];
-  readonly manuals = ['English', 'Gujarati', 'Sugam'];
-
   search = inject(SearchService);
   progress = signal(0);
   scrolled = signal(false);
@@ -119,7 +79,7 @@ export class App {
       const li = this.hoverOpened;
       if (li && (e.target as Element).closest?.('.p-menubar-item-content') && li.contains(e.target as Node) && li.getAttribute('aria-expanded') === 'true') { e.stopPropagation(); this.hoverOpened = null; }
     }, true);
-    // Teal Saffron is the default; a visitor's own pick (stored under THEME_KEY) wins.
+    // Blue Saffron is the default; a visitor's own pick (stored under THEME_KEY) wins.
     let saved: (typeof this.themes)[number] | undefined;
     try { const k = localStorage.getItem(App.THEME_KEY); saved = this.themes.find((x) => x.key === k); } catch { /* storage unavailable */ }
     this.setTheme(saved ?? this.defaultTheme);
@@ -235,29 +195,26 @@ export class App {
   ];
 
   setLanguage(code: string) { document.documentElement.lang = code; }
-  /* Each theme = main (buttons, links, highlights) + ink (its surface colour: banners, top bar, footer, dark panels,
-     dark-mode tint). Every surface in the CSS is derived from these two, so picking a theme recolours the whole site. */
   readonly themes = [
-    { key: 'navy', name: 'Govt Blue', main: '#1e40af', a2: '#2563eb', a3: '#bfdbfe', ink: '#0b2a66' },
-    { key: 'jade', name: 'Teal Green', main: '#0f766e', a2: '#059669', a3: '#99f6e4', ink: '#073f3b' },
-    { key: 'indigo', name: 'Indigo', main: '#4f46e5', a2: '#8b5cf6', a3: '#c4b5fd', ink: '#272270' },
-    { key: 'sky', name: 'Sky', main: '#0284c7', a2: '#38bdf8', a3: '#bae6fd', ink: '#0b3a5c' },
-    { key: 'emerald', name: 'Emerald', main: '#059669', a2: '#34d399', a3: '#a7f3d0', ink: '#064e3b' },
-    { key: 'rose', name: 'Rose', main: '#e11d48', a2: '#fb7185', a3: '#fecdd3', ink: '#5c0d24' },
-    { key: 'amber', name: 'Amber', main: '#d97706', a2: '#fbbf24', a3: '#fde68a', ink: '#5a2a06' },
-    { key: 'tricolour', name: 'Tricolour', main: '#06038d', a2: '#ff9933', a3: '#ffdcb8', ink: '#0b1f5c', dot: 'linear-gradient(135deg,#ff9933 0 34%,#fff 34% 66%,#138808 66%)' },
-    // default: the Digital Gujarat 2.0 Figma colours — orange actions on teal surfaces
-    { key: 'saffron', name: 'Teal Saffron', main: '#d97706', a2: '#ff9933', a3: '#ffe0c2', ink: '#084d50', ink2: '#0a6266', dot: 'linear-gradient(135deg, #084d50, #d97706)' },
+    { key: 'navy', name: 'Govt Blue', main: '#1e40af', a2: '#2563eb', a3: '#bfdbfe' },
+    { key: 'jade', name: 'Teal Green', main: '#0f766e', a2: '#059669', a3: '#99f6e4' },
+    { key: 'indigo', name: 'Indigo', main: '#4f46e5', a2: '#8b5cf6', a3: '#c4b5fd' },
+    { key: 'sky', name: 'Sky', main: '#0284c7', a2: '#38bdf8', a3: '#bae6fd' },
+    { key: 'emerald', name: 'Emerald', main: '#059669', a2: '#34d399', a3: '#a7f3d0' },
+    { key: 'rose', name: 'Rose', main: '#e11d48', a2: '#fb7185', a3: '#fecdd3' },
+    { key: 'amber', name: 'Amber', main: '#d97706', a2: '#fbbf24', a3: '#fde68a' },
+    { key: 'tricolour', name: 'Tricolour', main: '#06038d', a2: '#ff9933', a3: '#ffdcb8', dot: 'linear-gradient(135deg,#ff9933 0 34%,#fff 34% 66%,#138808 66%)' },
+    { key: 'saffron', name: 'Blue Saffron', main: '#c2410c', a2: '#ff9933', a3: '#ffe0c2', dot: 'linear-gradient(135deg, #0b3d91, #ff9933)' }, // menu label + swatch only; page colours unchanged
+    // ink/ink2: this theme's own dark surfaces (top bar, banners, stats) — deep saffron-brown instead of the default navy
     { key: 'saffron-plain', name: 'Saffron', main: '#d4570b', a2: '#ff9933', a3: '#ffe3c4', ink: '#3b1a06', ink2: '#7a3510' },
-    { key: 'indiagreen', name: 'India Green', main: '#138808', a2: '#22a516', a3: '#c8f7bf', ink: '#0d3f0a' },
-    { key: 'chakra', name: 'Chakra Blue', main: '#06038d', a2: '#3f3fd1', a3: '#c9c9ff', ink: '#0b0a52' },
-  ] as { key: string; name: string; main: string; a2: string; a3: string; ink: string; ink2?: string; dot?: string }[];
-  /** Default theme for visitors who haven't picked one: Teal Saffron. */
+    { key: 'indiagreen', name: 'India Green', main: '#138808', a2: '#22a516', a3: '#c8f7bf' },
+    { key: 'chakra', name: 'Chakra Blue', main: '#06038d', a2: '#3f3fd1', a3: '#c9c9ff' },
+  ];
+  /** Default theme for visitors who haven't picked one: Blue Saffron. */
   readonly defaultTheme = this.themes.find((x) => x.key === 'saffron') ?? this.themes[0];
-  /* storage key, bumped whenever the default changes so every visitor starts on it once: 'dg-theme' and 'dg-theme-v2'
-     held picks made before Teal Saffron became the full-site theme. v3 = everyone starts on Teal Saffron; a theme they
-     pick afterwards is remembered. Keep in sync with the pre-paint script in index.html. */
-  private static readonly THEME_KEY = 'dg-theme-v3';
+  /* new storage key: the old 'dg-theme' got 'navy' written for every visitor during earlier theme work,
+     which would have hidden the new default; starting a fresh key gives everyone Blue Saffron once. */
+  private static readonly THEME_KEY = 'dg-theme-v2';
   theme = signal(this.defaultTheme);
   themeOpen = signal(false);
 
@@ -271,12 +228,16 @@ export class App {
     s.setProperty('--brand-3', t.a3);
     // lets CSS give a theme extra touches that must respect dark mode (e.g. Saffron's brown text, see official.scss)
     document.documentElement.setAttribute('data-dg-theme', t.key);
-    // surfaces: every theme brings its own ink; the CSS derives glows, hovers and the dark-mode palette from it
-    const k = parseInt(t.ink.slice(1), 16);
-    s.setProperty('--ink', t.ink);
-    s.setProperty('--ink-2', t.ink2 ?? `color-mix(in srgb, ${t.ink} 78%, #fff)`);
-    s.setProperty('--ink-rgb', `${(k >> 16) & 255}, ${(k >> 8) & 255}, ${k & 255}`);
-    s.setProperty('--dg-hero-bg', t.ink);
+    // dark surfaces: a theme may bring its own (e.g. Saffron = saffron-brown); otherwise fall back to the default navy
+    if (t.ink) {
+      const k = parseInt(t.ink.slice(1), 16);
+      s.setProperty('--ink', t.ink);
+      s.setProperty('--ink-2', t.ink2 ?? t.ink);
+      s.setProperty('--ink-rgb', `${(k >> 16) & 255}, ${(k >> 8) & 255}, ${k & 255}`);
+      s.setProperty('--dg-hero-bg', t.ink);
+    } else {
+      for (const p of ['--ink', '--ink-2', '--ink-rgb', '--dg-hero-bg']) s.removeProperty(p);
+    }
     try { localStorage.setItem(App.THEME_KEY, t.key); } catch { /* storage unavailable */ }
   }
 
@@ -311,24 +272,7 @@ export class App {
   skipToMain(e: Event) {
     e.preventDefault();
     const el = document.querySelector<HTMLElement>('[data-main]');
-    if (!el) return;
-    // Land the main section right under the sticky top bar + navigation, so the whole banner is out of view.
-    // (scrollIntoView added the page's scroll-padding AND the section's scroll-margin, stopping ~250px short and
-    // leaving the bottom of the banner on screen.)
-    const bars = () => [document.querySelector('.site-top'), document.querySelector('.site-header .header-inner')]
-      .reduce((m, b) => Math.max(m, b ? b.getBoundingClientRect().bottom : 0), 0);
-    const gap = () => el.getBoundingClientRect().top - bars(); // > 0: banner still showing; < 0: section under the header
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('a11y-nomotion');
-    window.scrollTo({ top: window.scrollY + gap(), behavior: reduce ? 'auto' : 'smooth' });
-    el.focus({ preventScroll: true });
-    // The navigation bar changes height when it switches to its scrolled style (an 0.8s morph, and the amount depends
-    // on the screen width), so the first measurement can be off by a few pixels on laptops. Once scrolling and the
-    // morph have settled, measure again and snap the section exactly under the bars.
-    let tries = 0;
-    const settle = () => {
-      const d = gap();
-      if (Math.abs(d) > 1 && tries++ < 3) { window.scrollBy({ top: d, behavior: 'auto' }); setTimeout(settle, 120); }
-    };
-    setTimeout(settle, reduce ? 50 : 900);
+    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el?.focus({ preventScroll: true });
   }
 }

@@ -151,3 +151,8 @@ html:root { --p-section-y: clamp(44px, 5vw, 72px); }
 
 /* header Login / Register: compact size (colour and shape come from buttons.scss) */
 :root .site-header .p-button.login-btn { height: 38px; padding: 0 16px; gap: 8px; font-size: 0.9rem; .pi { font-size: 0.9rem; } }
+
+/* hero feature card: size to its labels instead of a fixed 440px, so longer words (e.g. "Inclusiveness") never spill out */
+@media (min-width: 641px) { :root .hv-card { width: max-content; max-width: 100%; grid-template-columns: repeat(3, auto); > div { min-width: 0; } b, small { white-space: normal; overflow-wrap: break-word; } } }
+/* hero facts (Apply Online / Track Application / Get Certificates): keep all three on one row, no ragged wrap */
+@media (min-width: 641px) { :root .hero-facts { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; > div { padding: 0 18px; } dt { font-size: 1.05rem; white-space: nowrap; } dd { white-space: nowrap; } } }

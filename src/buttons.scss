@@ -7,9 +7,11 @@
    - states: hover darkens the fill, press does nothing fancy, keyboard focus shows a clear outline
    ===================================================================================================== */
 
-$hover: color-mix(in srgb, var(--brand) 86%, #000);
-$saffron: #ff9933;
-$saffron-hover: #f08a1f;
+/* every button fill = the theme's action colour (Teal Saffron = #d97706); hover = one step darker */
+$btn: var(--brand);
+$hover: var(--act-hover);
+$saffron: $btn;
+$saffron-hover: $hover;
 $primary: ':not(.p-button-outlined):not(.p-button-text):not(.p-button-link):not(.p-button-secondary):not(.p-button-icon-only):not(:disabled)';
 
 /* ---- shape + states, every button ---- */
@@ -28,7 +30,7 @@ $primary: ':not(.p-button-outlined):not(.p-button-text):not(.p-button-link):not(
 
 /* ---- primary: solid brand ---- */
 :root .p-button#{$primary} {
-  background: var(--brand) !important; border-color: var(--brand) !important; color: #fff !important;
+  background: $btn !important; border-color: $btn !important; color: #fff !important;
   &:hover { background: $hover !important; border-color: $hover !important; }
 }
 
@@ -36,22 +38,49 @@ $primary: ':not(.p-button-outlined):not(.p-button-text):not(.p-button-link):not(
 :root :is(.promo, .help-card, .site-footer .footer-cta) .p-button#{$primary},
 :root .consent-dlg .p-button.consent-close,
 :root.app-dark :is(.section, .cta-band) .p-button#{$primary} {
-  background: $saffron !important; border-color: $saffron !important; color: #1b1200 !important;
+  background: $saffron !important; border-color: $saffron !important; color: #fff !important;
   &:hover { background: $saffron-hover !important; border-color: $saffron-hover !important; }
 }
 
-/* ---- scholarship pages keep their own theme colour, just flat ---- */
+/* ---- scholarship pages: same orange (previously their own theme colour) ---- */
 :root :is(app-scholarships, app-scholarship-detail) .p-button#{$primary} {
-  background: var(--sb) !important; border-color: var(--sb) !important; color: #fff !important;
-  &:hover { background: var(--ss) !important; border-color: var(--ss) !important; }
+  background: $btn !important; border-color: $btn !important; color: #fff !important;
+  &:hover { background: $hover !important; border-color: $hover !important; }
 }
 
 /* ---- custom (non-PrimeNG) primary buttons ---- */
 :root :is(.cl-btn-main, .cs-btn-main, .sd-act-main) {
-  background: var(--brand) !important; border-color: var(--brand) !important; color: #fff !important;
+  background: $btn !important; border-color: $btn !important; color: #fff !important;
   &:hover:not(:disabled) { background: $hover !important; border-color: $hover !important; }
 }
 :root .cl-btn-gold {
-  background: $saffron !important; border-color: $saffron !important; color: #1b1200 !important;
+  background: $saffron !important; border-color: $saffron !important; color: #fff !important;
   &:hover:not(:disabled) { background: $saffron-hover !important; border-color: $saffron-hover !important; }
 }
+
+/* ---- other custom filled buttons (certificate verify, upload "solid"/"dark") ---- */
+:root .cert-verify, :root .dz-btn.solid, :root .dz-btn.dark {
+  background: $btn !important; border-color: $btn !important; color: #fff !important;
+  &:hover:not(:disabled) { background: $hover !important; border-color: $hover !important; }
+}
+
+/* ---- scholarship filter chip (active), "Load More", selected page number ---- */
+:root :is(app-scholarships, app-scholarship-detail) .sch-cats button.on,
+:root :is(app-scholarships, app-scholarship-detail) .sch-loadmore button,
+:root .p-paginator .p-paginator-page.p-paginator-page-selected {
+  background: $btn !important; border-color: $btn !important; color: #fff !important;
+}
+:root :is(app-scholarships, app-scholarship-detail) .sch-loadmore button:hover { background: $hover !important; border-color: $hover !important; }
+
+/* ---- floating buttons: accessibility (Ctrl+F2) and back-to-top ---- */
+/* no !important on .ax-fab, so the high-contrast mode's black/yellow version still wins */
+:root .ax-fab { --ux: #{$btn}; background: $btn; box-shadow: 0 10px 28px rgba(var(--brand-rgb), 0.45);
+  &:hover { box-shadow: 0 14px 34px rgba(var(--brand-rgb), 0.55); } }
+:root p-scrolltop button.p-scrolltop {
+  /* white ring like the accessibility button, so it stays visible over the orange sections */
+  background: $btn !important; border: 2px solid #fff !important; color: #fff !important; box-shadow: 0 8px 20px rgba(var(--brand-rgb), 0.45) !important;
+  &:hover { background: $hover !important; }
+}
+
+/* ---- top bar text-size reset "A" (active state) ---- */
+:root .topbar .font-ctl button.on { background: $btn !important; color: #fff !important; box-shadow: 0 4px 12px rgba(var(--brand-rgb), 0.45) !important; }

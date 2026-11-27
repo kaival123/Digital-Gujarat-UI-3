@@ -1,29 +1,43 @@
 /* ===== Design tokens — single source of truth =====
-   Identity: "Aurora Ink" — deep ink surfaces, electric indigo brand, amber highlights, soft cool neutrals, Sora display type.
+   Identity: Digital Gujarat 2.0 — teal surfaces (#084d50), orange actions (#d97706), soft neutrals.
    --brand / --brand-2 / --brand-3 / --brand-rgb are rewritten at runtime by the colour-theme picker (app.ts). */
 
 :root {
   /* ---- brand (theme-switchable) ---- */
-  --brand: #1e40af;
-  --brand-rgb: 30, 64, 175;
-  --brand-2: #2563eb;
-  --brand-3: #bfdbfe;
-  --accent: #f59e0b;
-  --accent-rgb: 245, 158, 11;
+  --brand: #d97706; /* Digital Gujarat 2.0: orange actions on teal (#084d50) surfaces */
+  --brand-rgb: 217, 119, 6;
+  --brand-2: #ff9933;
+  --brand-3: #ffe0c2;
+  --accent: var(--brand);
+  --accent-rgb: var(--brand-rgb);
 
   /* ---- ink (dark surfaces) ---- */
-  --ink: #0a1730;
-  --ink-2: #10285a;
-  --ink-rgb: 10, 23, 48;
+  --ink: #084d50;
+  --ink-2: #0a6266;
+  --ink-rgb: 8, 77, 80;
+
+  /* ---- derived from the theme pair (--brand = actions, --ink = surfaces); the theme picker sets both ---- */
+  --act-hover: color-mix(in srgb, var(--brand) 80%, #000);
+  --srf-glow: color-mix(in srgb, var(--ink), #fff 30%);   /* lighter surface tint for glows and blobs */
+  --srf-light: color-mix(in srgb, var(--ink), #fff 62%);  /* readable surface tint on dark backgrounds */
+  --srf-deep: color-mix(in srgb, var(--ink), #000 38%);   /* deeper surface for dark mode */
+  /* dark-mode surfaces, tinted with the theme ink (Teal Saffron = teal darks, Govt Blue = navy darks, ...) */
+  --dk-bg: color-mix(in srgb, var(--ink) 20%, #040606);
+  --dk-alt: color-mix(in srgb, var(--ink) 28%, #060808);
+  --dk-card: color-mix(in srgb, var(--ink) 40%, #070909);
+  --dk-chip: color-mix(in srgb, var(--ink) 52%, #0b0f0f);
+  --dk-line: color-mix(in srgb, var(--ink) 58%, #1a2020);
+  --dk-text: color-mix(in srgb, var(--ink) 6%, #eef2f2);
+  --dk-muted: color-mix(in srgb, var(--ink) 18%, #a8b4b3);
 
   /* ---- surfaces & text (light) ---- */
   --dg-bg: #f4f6fa;
   --dg-alt: #e8edf5;
   --dg-card: #ffffff;
-  --dg-text: #0f1b2d;
-  --dg-muted: #4b5b75;
+  --dg-text: #101828;
+  --dg-muted: #4c4c4c;
   --dg-border: #d9e1ec;
-  --dg-hero-bg: #0a1730;
+  --dg-hero-bg: #084d50;
   --dg-success: #059669;
   --dg-danger: #e11d48;
 
@@ -67,9 +81,9 @@
   --grad-brand: linear-gradient(135deg, var(--brand), var(--brand-2));
   --grad-ink: linear-gradient(145deg, var(--ink), var(--ink-2));
   --grad-aurora:
-    radial-gradient(60% 70% at 85% 0%, rgba(var(--brand-rgb), 0.55), transparent 62%),
-    radial-gradient(50% 60% at 5% 100%, color-mix(in srgb, var(--brand-2) 38%, transparent), transparent 62%),
-    radial-gradient(35% 45% at 60% 110%, rgba(var(--accent-rgb), 0.18), transparent 70%),
+    radial-gradient(60% 70% at 85% 0%, color-mix(in srgb, var(--srf-glow) 55%, transparent), transparent 62%), /* surface glow, as on the home banner */
+    radial-gradient(50% 60% at 5% 100%, rgba(var(--brand-rgb), 0.28), transparent 62%),
+    radial-gradient(35% 45% at 60% 110%, color-mix(in srgb, var(--srf-glow) 25%, transparent), transparent 70%),
     var(--ink);
 
   /* ---- layers ---- */
@@ -77,18 +91,17 @@
 }
 
 :root.app-dark {
-  --dg-bg: #08101f;
-  --dg-alt: #0c1730;
-  --dg-card: #111f3a;
-  --dg-text: #e8eefb;
-  --dg-muted: #93a5c8;
-  --dg-border: #1e3159;
-  --dg-hero-bg: #060d1b;
+  --dg-bg: var(--dk-bg); /* dark mode: darks tinted with the theme ink */
+  --dg-alt: var(--dk-alt);
+  --dg-card: var(--dk-card);
+  --dg-text: var(--dk-text);
+  --dg-muted: var(--dk-muted);
+  --dg-border: var(--dk-line);
+  --dg-hero-bg: var(--srf-deep);
   --dg-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   --sh-1: 0 1px 2px rgba(0, 0, 0, 0.5);
   --sh-2: 0 12px 32px rgba(0, 0, 0, 0.5);
   --sh-3: 0 30px 70px -18px rgba(0, 0, 0, 0.8);
-  --ink: #060d1b;
 }
 
 @media (min-width: 480px) { :root { --gutter: 20px; } }
